@@ -8,7 +8,6 @@ import Watchlists from './components/Watchlists';
 import MovieDetails from './components/MovieDetails';
 
 const App = () => {
-  console.log("App is rendering");
   return (
     <>
       <h1>React is Running!</h1>
