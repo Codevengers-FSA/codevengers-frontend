@@ -1,7 +1,9 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
 
 const AllMovies = () => {
   const [movies, setMovies] = useState([]);
+  const navigate = useNavigate();
 
   useEffect(() => {
     const getMovies = async () => {
@@ -29,14 +31,25 @@ const AllMovies = () => {
       <section id="all-movies">
         {movies.length > 0 ? (
           movies.map((movie) => (
-            <div key={movie.id} className="movie-card">
-              <h2>{movie.title}</h2>
+            <section
+              onClick={() => {
+                navigate(`/moviecatalog/${movie.id}`);
+              }}
+              key={movie.id}
+              style={{ cursor: 'pointer' }}
+            >
+              <h3>{movie.title}</h3>
               {movie.image ? (
-                <img src={movie.image} alt={`${movie.title} Poster`} className="movie-poster" />
+                <img
+                  src={movie.image}
+                  alt={`${movie.title} Poster`}
+                  height="350"
+                  width="250"
+                />
               ) : (
                 <p>No Image Available</p>
               )}
-            </div>
+            </section>
           ))
         ) : (
           <p>Loading movies...</p>
