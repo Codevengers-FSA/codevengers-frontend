@@ -11,7 +11,6 @@ import LogInForm from './components/LogInForm';
 const App = () => {
   return (
     <>
-      <h1>React is Running!</h1>
       <Navbar />
       <Routes>
         <Route path="/" element={<Home />} />
