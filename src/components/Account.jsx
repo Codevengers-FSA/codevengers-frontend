@@ -1,14 +1,18 @@
 import { useState } from "react";
 
-const LogInForm = () => {
-
+const Account = ()=>{
+    
     const [inputUsername, setInputUsername] = useState('');
     const [inputPassword, setInputPassword] = useState('')
     const [token, setToken] = useState({})
+
+const register = async ()=>{
     
-    const login = async (event) => {
-        event.preventDefault();
-        const userResponse = await fetch('', {
+};
+register();
+const login = async (event) => {
+    event.preventDefault();
+    const userResponse = await fetch('', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
@@ -18,19 +22,32 @@ const LogInForm = () => {
                 password: inputPassword
             })
         })
-
+        
         setInputUsername('');
         setInputPassword('')
-
+        
         const object = await userResponse.json();
         const accessToken = object.token
         { console.log(token) }
         setToken(accessToken)
         localStorage.setItem('token', accessToken)
-    }
+    };
+
 
     return (
-        
+        <>
+        <h1>New User Registration</h1>
+    
+        <form>
+            <input type="text" placeholder="First Name" required></input>
+            <input type = "email" placeholder="Email" required></input>
+            <input placeholder="username" required ></input>
+            <input type="password" placeholder="Password" required/>
+            <button type="submit">Register</button>
+        </form>
+  
+  
+        <h1>Login!</h1>
         <form onSubmit={login}>
             <input type= "username" placeholder="username"
             onChange={((event)=>{setInputUsername(event.target.value)})}
@@ -42,7 +59,10 @@ const LogInForm = () => {
             <button>Log In!</button>
           
         </form>
+
+        </>
     )
 };
 
-export default LogInForm;
+
+export default Account;
