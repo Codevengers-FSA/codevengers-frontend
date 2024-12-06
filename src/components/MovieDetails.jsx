@@ -1,15 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import { useParams } from 'react-router-dom';
+import { useWatchlist } from './WatchlistContext';
 
 const MovieDetails = () => {
   const { id } = useParams();
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
+  const { addToWatchlist } = useWatchlist();
 
   useEffect(() => {
     const getSingleMovie = async () => {
       try {
-        console.log(`Fetching movie with ID: ${id}`);
         const response = await fetch(`https://codevengers-backend.onrender.com/movies/${id}`);
 
         if (!response.ok) {
@@ -17,8 +18,6 @@ const MovieDetails = () => {
         }
 
         const data = await response.json();
-        console.log("Fetched movie data:", data);
-
         setSelectedMovie(data);
       } catch (error) {
         console.error("Error fetching single movie:", error);
@@ -38,6 +37,10 @@ const MovieDetails = () => {
     return <p>Movie details not found.</p>;
   }
 
+  const handleAddToWatchlist = () => {
+    addToWatchlist(selectedMovie);
+  };
+
   return (
     <>
       {selectedMovie.image && (
@@ -51,6 +54,7 @@ const MovieDetails = () => {
       )}
       <h2 id="movie-title">{selectedMovie.title}</h2>
       <p id="movie-summary">{selectedMovie.summary}</p>
+      <button onClick={handleAddToWatchlist}>Add to Watchlist</button>
     </>
   );
 };
