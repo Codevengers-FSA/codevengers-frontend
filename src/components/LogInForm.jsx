@@ -8,7 +8,7 @@ const LogInForm = () => {
     
     const login = async (event) => {
         event.preventDefault();
-        const userResponse = await fetch('', {
+        const userResponse = await fetch('https://codevengers-backend.onrender.com/users', {
             method: "POST",
             headers: {
                 "Content-Type": "application/json"
