@@ -18,8 +18,8 @@ const App = () => {
         <Route path="/moviecatalog" element={<AllMovies />} />
         <Route path="/moviecatalog/:id" element={<MovieDetails />} />
         <Route path="/watchlists" element={<Watchlists />} />
-        <Route path="/login" element={<Account />}/>
-        <Route path="/account" element={<AccountDetails />} />
+        <Route path="/account" element={<Account />}/>
+  
       </Routes>
     </>
   );
