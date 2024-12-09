@@ -1,44 +1,57 @@
 // This file handles fetching, displaying, and managing the list of comments for a movie. 
 
-import { useEffect, useState } from "react";
+import React, { useEffect, useState } from "react";
+import Comment from "./Comments";
 
 const CommentsSection = ({ movieId }) => {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
 
   useEffect(() => {
-    // Fetch comments from the API
-    fetch(`/api/movies/${movieId}/comments`)
-      .then((res) => res.json())
+    fetch(`https://codevengers-backend.onrender.com/comments/movies/${movieId}/comments`)
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return res.json();
+      })
       .then((data) => setComments(data))
-      .catch((err) => console.error(err));
+      .catch((err) => console.error('Failed to fetch comments: ', err));
   }, [movieId]);
 
   const handleAddComment = (e) => {
     e.preventDefault();
 
-    // API call to add comment
-    fetch(`/api/movies/${movieId}/comments`, {
+    fetch(`https://codevengers-backend.onrender.com/comments/movies/${movieId}/comments`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ text: newComment }),
     })
-      .then((res) => res.json())
-      .then((newComment) => {
-        setComments([...comments, newComment]);
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return res.json();
+      })
+      .then((addedComment) => {
+        setComments([...comments, addedComment]);
         setNewComment('');
       })
-      .catch((err) => console.error(err));
+      .catch((err) => console.error('Failed to submit a comment: ', err));
   };
 
   const handleReply = (commentId, replyText) => {
-    // API call to add reply
-    fetch(`/api/movies/${movieId}/comments/${commentId}/replies`, {
+    fetch(`https://codevengers-backend.onrender.com/comments/movies/${movieId}/comments/${commentId}/replies`, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify({ text: replyText }),
     })
-      .then((res) => res.json())
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Network response was not ok');
+        }
+        return res.json();
+      })
       .then((newReply) => {
         setComments((prevComments) =>
           prevComments.map((comment) =>
@@ -48,29 +61,29 @@ const CommentsSection = ({ movieId }) => {
           )
         );
       })
-      .catch((err) => console.error(err));
+      .catch((err) => console.error('Failed to submit a reply: ', err));
   };
-  
-  
+
   return (
     <div className="comments-section">
       <h2>Comments</h2>
-        <form onSubmit={handleAddComment}>
-          <textarea
-            value={newComment}
-            onChange={(e) => setNewComment(e.target.value)}
-            placeholder="Add a comment..."
-          ></textarea>
+
+      <form onSubmit={handleAddComment}>
+        <textarea
+          value={newComment}
+          onChange={(e) => setNewComment(e.target.value)}
+          placeholder="Add a comment..."
+        />
         <button type="submit">Submit Comment</button>
       </form>
 
-    <div className="comments-list">
-      {comments.map((comment) => (
-        <Comment key={comment.id} comment={comment} onReply={handleReply} />
-      ))}
+      <div className="comments-list">
+        {comments.map((comment) => (
+          <Comment key={comment.id} comment={comment} onReply={handleReply} />
+        ))}
+      </div>
     </div>
-  </div>
   );
 };
 
-export default CommentsSection; 
+export default CommentsSection;
