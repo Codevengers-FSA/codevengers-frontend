@@ -1,9 +1,7 @@
 import React, { useEffect, useState } from "react";
-
+import AccountDetails from "./AccountDetails"
 
 const Account = () => {
-
-
     const [registerName, setRegisterName] = useState('');
     const [registerEmail, setRegisterEmail] = useState('');
     const [registerUsername, setRegisterUsername] = useState('');
@@ -13,15 +11,13 @@ const Account = () => {
     const [inputPassword, setInputPassword] = useState('')
 
     const [token, setToken] = useState({})
-    
+
     const [tokenPresent, setTokenPresent] = useState(false);
 
-    
-    
     const register = async (event) => {
-        
+
         event.preventDefault();
-        
+
         try {
             const response = await fetch('https://codevengers-backend.onrender.com/auth/register', {
                 method: 'POST',
@@ -33,23 +29,23 @@ const Account = () => {
                     email: registerEmail,
                     username: registerUsername,
                     password: registerPassword
-                    
+
                 }),
             });
-            
+
             setRegisterName('');
             setRegisterEmail('');
             setRegisterUsername('');
             setRegisterPassword('');
-            
+
             const tokenObj = await response.json();
             if (response.ok) {
-                
+
                 const accessToken = tokenObj.token;
                 setToken(accessToken);
                 localStorage.setItem('token', accessToken)
-                
-                
+
+
             } else {
                 console.error('Registration failed', tokenObj);
             }
@@ -57,15 +53,15 @@ const Account = () => {
             console.error('Error during registration, Sorry!', error);
         }
     };
-    
-    useEffect(()=>{
+
+    useEffect(() => {
         const token = localStorage.getItem('token');
         setTokenPresent(!!token);
     }, [])
 
     const login = async (event) => {
         event.preventDefault();
-        
+
         try {
             const userResponse = await fetch('https://codevengers-backend.onrender.com/auth/login', {
                 method: "POST",
@@ -77,12 +73,12 @@ const Account = () => {
                     password: inputPassword
                 })
             })
-            
+
             setInputUsername('');
             setInputPassword('')
-            
+
             const object = await userResponse.json();
-            
+
             if (userResponse.ok) {
                 const accessToken = object.token
                 setToken(accessToken)
@@ -95,18 +91,16 @@ const Account = () => {
             console.error('Error during login:', error)
         }
     };
-    
-    const logOut = () =>{
+
+    const logOut = () => {
         localStorage.removeItem('token')
         setTokenPresent(false);
     }
 
 return (
-
-        <>
-        
+    <>
         {!tokenPresent && (
-            
+
             <form onSubmit={register}>
                 <h1>New User Registration</h1>
                 <input type="text" placeholder="First Name"
@@ -127,29 +121,30 @@ return (
 
                 <button type="submit">Register</button>
             </form>
-            )}
+        )}
 
         {!tokenPresent && (
 
-            
             <form onSubmit={login}>
                 <h1>Login!</h1>
 
                 <input type="username" placeholder="username"
                     onChange={((event) => { setInputUsername(event.target.value) })}
-                    value={inputUsername} required/>
+                    value={inputUsername} required />
 
                 <input type="password" placeholder="password"
                     onChange={((event) => { setInputPassword(event.target.value) })}
-                    value={inputPassword} required/>
-                    </form>
+                    value={inputPassword} required />
+            </form>
         )}
-                {!tokenPresent ?
-                (<button onClick={login}>Log In!</button>)
-                :
-                (<button onClick={logOut}>Logout</button>)
-                }
-
+        {!tokenPresent ?
+            (<button onClick={login}>Log In!</button>
+            )
+            :
+            (<button onClick={logOut}>Logout</button>)
+        }
+        
+        {tokenPresent && <AccountDetails />}
         </>
     )
 
