@@ -1,5 +1,5 @@
 import React, { useEffect, useState } from "react";
-import { use } from "react";
+
 
 const Account = () => {
 
@@ -15,6 +15,7 @@ const Account = () => {
     const [token, setToken] = useState({})
     
     const [tokenPresent, setTokenPresent] = useState(false);
+
     
     
     const register = async (event) => {
@@ -57,6 +58,11 @@ const Account = () => {
         }
     };
     
+    useEffect(()=>{
+        const token = localStorage.getItem('token');
+        setTokenPresent(!!token);
+    }, [])
+
     const login = async (event) => {
         event.preventDefault();
         
@@ -87,6 +93,7 @@ const Account = () => {
         } catch (error) {
             console.error('Error during login:', error)
         }
+        setTokenPresent(true);
     };
     
     const logOut = () =>{
@@ -97,9 +104,11 @@ const Account = () => {
 return (
 
         <>
-            <h1>New User Registration</h1>
-
+        
+        {!tokenPresent && (
+            
             <form onSubmit={register}>
+                <h1>New User Registration</h1>
                 <input type="text" placeholder="First Name"
                     onChange={((event) => { setRegisterName(event.target.value) })}
                     value={registerName} required></input>
@@ -118,10 +127,13 @@ return (
 
                 <button type="submit">Register</button>
             </form>
+            )}
 
+        {!tokenPresent && (
 
-            <h1>Login!</h1>
+            
             <form onSubmit={login}>
+                <h1>Login!</h1>
 
                 <input type="username" placeholder="username"
                     onChange={((event) => { setInputUsername(event.target.value) })}
@@ -130,11 +142,14 @@ return (
                 <input type="password" placeholder="password"
                     onChange={((event) => { setInputPassword(event.target.value) })}
                     value={inputPassword} />
+                    </form>
+        )}
+                {!tokenPresent ?(
+                <button onClick={login}>Log In!</button>
+                ):
+                (<button onClick={logOut}>Logout</button>)
+                }
 
-                <button>Log In!</button>
-
-            </form>
-            <button onClick={logOut}>Logout</button>
         </>
     )
 
