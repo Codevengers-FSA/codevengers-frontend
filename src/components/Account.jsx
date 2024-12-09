@@ -74,6 +74,8 @@ const Account = () => {
                 })
             })
 
+            localStorage.setItem('username', inputUsername)
+
             setInputUsername('');
             setInputPassword('')
 
@@ -84,6 +86,8 @@ const Account = () => {
                 setToken(accessToken)
                 localStorage.setItem('token', accessToken)
                 setTokenPresent(true)
+
+            
             } else {
                 console.error('Login failed:', object);
             }
@@ -97,9 +101,36 @@ const Account = () => {
         setTokenPresent(false);
     }
 
-return (
-    <>
-        {!tokenPresent && (
+
+    
+    return (
+    <div>
+        {tokenPresent ? (
+            <>
+                <AccountDetails />
+                <button onClick={logOut}>Logout</button>
+            </>
+        ) : (
+            <>
+                <form onSubmit={register}>
+                    <h1>New User Registration</h1>
+                    <input type="text" name="name" value={registerName} onChange={(e) => setRegisterName(e.target.value)} placeholder="First Name" required />
+                    <input type="email" name="email" value={registerEmail} onChange={(e) => setRegisterEmail(e.target.value)} placeholder="Email" required />
+                    <input name="username" value={registerUsername} onChange={(e) => setRegisterUsername(e.target.value)} placeholder="Username" required />
+                    <input type="password" name="password" value={registerPassword} onChange={(e) => setRegisterPassword(e.target.value)} placeholder="Password" required />
+                    <button type="submit">Register</button>
+                </form>
+                <form onSubmit={login}>
+                    <h1>Login</h1>
+                    <input name="username" value={inputUsername} onChange={(e) => setInputUsername(e.target.value)} placeholder="Username" required />
+                    <input type="password" name="password" value={inputPassword} onChange={(e) => setInputPassword(e.target.value)} placeholder="Password" required />
+                    <button type="submit">Log In</button>
+                </form>
+            </>
+        )}
+    </div>
+);
+        {/* {!tokenPresent && (
 
             <form onSubmit={register}>
                 <h1>New User Registration</h1>
@@ -125,7 +156,7 @@ return (
 
         {!tokenPresent && (
 
-            <form onSubmit={login}>
+            <form>
                 <h1>Login!</h1>
 
                 <input type="username" placeholder="username"
@@ -146,7 +177,7 @@ return (
         
         {tokenPresent && <AccountDetails />}
         </>
-    )
+    ) */}
 
 };
 
