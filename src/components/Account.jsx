@@ -87,13 +87,13 @@ const Account = () => {
                 const accessToken = object.token
                 setToken(accessToken)
                 localStorage.setItem('token', accessToken)
+                setTokenPresent(true)
             } else {
                 console.error('Login failed:', object);
             }
         } catch (error) {
             console.error('Error during login:', error)
         }
-        setTokenPresent(true);
     };
     
     const logOut = () =>{
@@ -137,16 +137,16 @@ return (
 
                 <input type="username" placeholder="username"
                     onChange={((event) => { setInputUsername(event.target.value) })}
-                    value={inputUsername} />
+                    value={inputUsername} required/>
 
                 <input type="password" placeholder="password"
                     onChange={((event) => { setInputPassword(event.target.value) })}
-                    value={inputPassword} />
+                    value={inputPassword} required/>
                     </form>
         )}
-                {!tokenPresent ?(
-                <button onClick={login}>Log In!</button>
-                ):
+                {!tokenPresent ?
+                (<button onClick={login}>Log In!</button>)
+                :
                 (<button onClick={logOut}>Logout</button>)
                 }
 
