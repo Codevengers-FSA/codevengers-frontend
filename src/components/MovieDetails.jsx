@@ -8,6 +8,8 @@ const MovieDetails = () => {
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const { addToWatchlist } = useWatchlist();
+  const [userRating, setUserRating] = useState(0);
+  const [averageRating, setAverageRating] = useState(0)
 
   useEffect(() => {
     const getSingleMovie = async () => {
@@ -30,6 +32,65 @@ const MovieDetails = () => {
     getSingleMovie();
   }, [id]);
 
+  const fetchRatingData = async () => {
+    try {
+      const token = localStorage.getItem("authToken");
+      const response = await fetch(
+        `https://codevengers-backend.onrender.com/ratings/movies/${id}/ratings`,
+        {
+          method: "GET",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (response.ok) {
+        const data = await response.json();
+        setAverageRating(data.average);
+        setUserRating(data.userRating || 0);
+      } else {
+        console.error("Failed to fetch rating data.");
+      }
+    } catch (error) {
+      console.error("Error fetching rating data", error);
+    }
+  };
+
+  useEffect(() => {
+    fetchRatingData();
+  }, [id]);
+
+  const handleRatingClick = async (rating) => {
+    try {
+      const token = localStorage.getItem("authToken");
+      const response = await fetch(
+        `https://codevengers-backend.onrender.com/ratings/movies/${id}/rate`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ rating }),
+        }
+      );
+
+      if (response.ok) {
+        fetchRatingData();
+        setUserRating(rating);
+      } else {
+        console.error("Failed to save user rating.");
+      }
+    } catch (error) {
+      console.error("Error saving rating", error);
+    }
+  };
+ 
+  const handleAddToWatchlist = () => {
+    addToWatchlist(selectedMovie);
+  };
+
   if (isLoading) {
     return <p>Loading movie details...</p>;
   }
@@ -37,10 +98,6 @@ const MovieDetails = () => {
   if (!selectedMovie) {
     return <p>Movie details not found.</p>;
   }
-
-  const handleAddToWatchlist = () => {
-    addToWatchlist(selectedMovie);
-  };
 
   return (
     <>
@@ -56,7 +113,28 @@ const MovieDetails = () => {
       <h2 id="movie-title">{selectedMovie.title}</h2>
       <p id="movie-summary">{selectedMovie.summary}</p>
       <CommentsSection movieId={id} />
+      
       <button onClick={handleAddToWatchlist}>Add to Watchlist</button>
+
+      <div>
+        <h3>Rate This Movie</h3>
+        <div>
+          {[1, 2, 3, 4, 5].map((star) => (
+            <span
+              key={star}
+              style={{
+                cursor: "pointer",
+                color: userRating >= star ? "gold" : "gray",
+                fontSize: "24px",
+              }}
+              onClick={() => handleRatingClick(star)}
+            >
+              ★
+            </span>
+          ))}
+        </div>
+        <p>Current Average Rating: {averageRating.toFixed(1)}</p>
+      </div>
     </>
   );
 };
