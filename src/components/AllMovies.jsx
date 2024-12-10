@@ -14,6 +14,7 @@ const AllMovies = () => {
   
         if (Array.isArray(movieData)) {
           setMovies(movieData);
+          const sortedMovies = movieData.sort((a, b) => a.id - b.id);
         } else {
           console.error("Unexpected API response format:", movieData);
         }
