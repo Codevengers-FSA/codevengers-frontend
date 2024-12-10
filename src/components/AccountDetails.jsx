@@ -4,6 +4,20 @@ import { useWatchlist } from '../components/WatchlistContext';
 const AccountDetails = () => {
   const { watchlist } = useWatchlist();
   const username = localStorage.getItem('username');
+  const [comments, setComments] = useState([]);
+
+  useEffect(() => {
+    const fetchUserComments = async () => {
+      try {
+        const response = await fetch('https://codevengers-backend.onrender.com/users/${userId}/comments');
+        const data = await response.json();
+        setComments(data);
+      } catch (error) {
+        console.error('Error fetching user comments:', error);
+      }
+    };
+    fetchUserComments();
+  }, [userId]);
 
   return (
     <>
