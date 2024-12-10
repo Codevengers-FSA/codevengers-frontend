@@ -6,6 +6,9 @@ import Comment from "./Comments";
 const CommentsSection = ({ movieId }) => {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
+  
+   const token = localStorage.getItem('token');
+
 
   useEffect(() => {
     fetch(`https://codevengers-backend.onrender.com/comments/movies/${movieId}/comments`)
@@ -65,25 +68,31 @@ const CommentsSection = ({ movieId }) => {
   };
 
   return (
-    <div className="comments-section">
-      <h2>Comments</h2>
+    <>
+    {token && (
 
-      <form onSubmit={handleAddComment}>
-        <textarea
-          value={newComment}
-          onChange={(e) => setNewComment(e.target.value)}
-          placeholder="Add a comment..."
-        />
-        <button type="submit">Submit Comment</button>
-      </form>
+        <div className="comments-section">
+          <h2>Comments</h2>
 
-      <div className="comments-list">
-        {comments.map((comment) => (
-          <Comment key={comment.id} comment={comment} onReply={handleReply} />
-        ))}
-      </div>
-    </div>
-  );
+          <form onSubmit={handleAddComment}>
+            <textarea
+              value={newComment}
+              onChange={(e) => setNewComment(e.target.value)}
+              placeholder="Add a comment..."
+            />
+            <button type="submit">Submit Comment</button>
+          </form>
+          </div>
+          
+          )}
+          
+          <div className="comments-list">
+            {comments.map((comment) => (
+              <Comment key={comment.id} comment={comment} onReply={handleReply} />
+            ))}
+          </div>
+        </>
+    );
 };
 
 export default CommentsSection;
