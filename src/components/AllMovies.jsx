@@ -3,6 +3,7 @@ import { useNavigate } from "react-router-dom";
 
 const AllMovies = () => {
   const [movies, setMovies] = useState([]);
+  const [search, setSearch] = useState("");
   const navigate = useNavigate();
 
   useEffect(() => {
@@ -25,12 +26,27 @@ const AllMovies = () => {
     getMovies();
   }, []);
 
+  // function that filters through the movies 
+  const filteredMovies = movies.filter((movie) => {
+    return movie.title.toLowerCase().includes(search.toLowerCase());
+  });
+
   return (
     <>
       <h1>Movie Catalog</h1>
+      {/* create input  */}
+      <div>
+        <input
+          type="text"
+          placeholder="Search for movie"
+          value={search}
+          onChange={(e) => setSearch(e.target.value)}
+        />
+      </div>
+
       <section id="all-movies">
-        {movies.length > 0 ? (
-          movies.map((movie) => (
+        {filteredMovies.length > 0 ? (
+          filteredMovies.map((movie) => (
             <section
               onClick={() => {
                 navigate(`/moviecatalog/${movie.id}`);
