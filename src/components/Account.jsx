@@ -61,7 +61,7 @@ const Account = () => {
 
     const login = async (event) => {
         event.preventDefault();
-
+      
         try {
             const userResponse = await fetch('https://codevengers-backend.onrender.com/auth/login', {
                 method: "POST",
@@ -72,27 +72,24 @@ const Account = () => {
                     username: inputUsername,
                     password: inputPassword
                 })
-            })
-
-            localStorage.setItem('username', inputUsername)
-
+            });
+    
+            localStorage.setItem('username', inputUsername);
             setInputUsername('');
-            setInputPassword('')
-
+            setInputPassword('');
+      
             const object = await userResponse.json();
-
+    
             if (userResponse.ok) {
-                const accessToken = object.token
-                setToken(accessToken)
-                localStorage.setItem('token', accessToken)
-                setTokenPresent(true)
-
-            
+                const accessToken = object.token;
+                setToken(accessToken);
+                localStorage.setItem('token', accessToken); 
+                setTokenPresent(true);
             } else {
                 console.error('Login failed:', object);
             }
         } catch (error) {
-            console.error('Error during login:', error)
+            console.error('Error during login:', error);
         }
     };
 

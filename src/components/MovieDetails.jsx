@@ -34,28 +34,35 @@ const MovieDetails = () => {
 
   const fetchRatingData = async () => {
     try {
-      const token = localStorage.getItem("authToken");
-      const response = await fetch(
-        `https://codevengers-backend.onrender.com/ratings/movies/${id}/ratings`,
-        {
-          method: "GET",
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        }
-      );
+      const token = localStorage.getItem("token");
+        console.log("Token from localStorage:", token);
 
-      if (response.ok) {
-        const data = await response.json();
-        setAverageRating(data.average);
-        setUserRating(data.userRating || 0);
-      } else {
-        console.error("Failed to fetch rating data.");
-      }
+        if (!token) {
+            console.error("No token found. Please log in.");
+            return;
+        }
+  
+        const response = await fetch('https://codevengers-backend.onrender.com/ratings/movies/2/rate', {
+          method: 'POST',
+          headers: {
+              'Authorization': `Bearer ${token}`,
+              'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ rating: 4 }),
+          }
+        );
+  
+        if (response.ok) {
+            const data = await response.json();
+            setAverageRating(data.average);
+            setUserRating(data.userRating || 0);
+        } else {
+            console.error("Failed to fetch rating data.");
+        }
     } catch (error) {
-      console.error("Error fetching rating data", error);
+        console.error("Error fetching rating data", error);
     }
-  };
+};
 
   useEffect(() => {
     fetchRatingData();
@@ -63,7 +70,7 @@ const MovieDetails = () => {
 
   const handleRatingClick = async (rating) => {
     try {
-      const token = localStorage.getItem("authToken");
+      const token = localStorage.getItem("token");
       const response = await fetch(
         `https://codevengers-backend.onrender.com/ratings/movies/${id}/rate`,
         {
