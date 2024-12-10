@@ -9,7 +9,7 @@ const MovieDetails = () => {
   const [isLoading, setIsLoading] = useState(true);
   const { addToWatchlist } = useWatchlist();
   const [userRating, setUserRating] = useState(0);
-  const [averageRating, setAverageRating] = useState(0)
+  const [averageRating, setAverageRating] = useState(0);
 
   useEffect(() => {
     const getSingleMovie = async () => {
@@ -33,40 +33,36 @@ const MovieDetails = () => {
   }, [id]);
 
   const fetchRatingData = async () => {
-    try {
-      const token = localStorage.getItem("token");
-        console.log("Token from localStorage:", token);
-
-        if (!token) {
-            console.error("No token found. Please log in.");
-            return;
-        }
-  
-        const response = await fetch('https://codevengers-backend.onrender.com/ratings/movies/2/rate', {
-          method: 'POST',
-          headers: {
-              'Authorization': `Bearer ${token}`,
-              'Content-Type': 'application/json',
-            },
-            body: JSON.stringify({ rating: 4 }),
-          }
-        );
-  
-        if (response.ok) {
-            const data = await response.json();
-            setAverageRating(data.average);
-            setUserRating(data.userRating || 0);
-        } else {
-            console.error("Failed to fetch rating data.");
-        }
-    } catch (error) {
-        console.error("Error fetching rating data", error);
+  try {
+    const token = localStorage.getItem("token");
+    if (!token) {
+      console.error("No token found. Please log in.");
+      return;
     }
-};
 
-  useEffect(() => {
-    fetchRatingData();
-  }, [id]);
+    const response = await fetch(`https://codevengers-backend.onrender.com/ratings/movies/${id}/ratings`, {
+      headers: {
+        'Authorization': `Bearer ${token}`,
+      },
+    });
+
+    if (response.ok) {
+      const data = await response.json();
+      console.log("Rating data:", data);
+
+      if (data.average !== undefined && data.userRating !== undefined) {
+        setAverageRating(data.average);
+        setUserRating(data.userRating);
+      } else {
+        console.error("Invalid rating data format.");
+      }
+    } else {
+      console.error("Failed to fetch ratings.");
+    }
+  } catch (error) {
+    console.error("Error fetching rating data", error);
+  }
+};
 
   const handleRatingClick = async (rating) => {
     try {
@@ -93,7 +89,11 @@ const MovieDetails = () => {
       console.error("Error saving rating", error);
     }
   };
- 
+
+  useEffect(() => {
+    fetchRatingData();
+  }, [id]);
+
   const handleAddToWatchlist = () => {
     addToWatchlist(selectedMovie);
   };
