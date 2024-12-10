@@ -2,20 +2,32 @@ body {
   font-family: 'Arial', sans-serif;
   margin: 0;
   padding: 0;
-  background: radial-gradient(circle, #e63946 20%, #ffffff 50%, #1d3557 80%);
+  color: #f1faee;
+  background: 
+    linear-gradient(to bottom, #8B0000, #FF5733), /* Red to orange gradient */
+    radial-gradient(circle at center, #000000 25%, #FFD700 50%, #8B0000 75%); /* Radial gradient with black, gold, and red */
+  background-size: cover;
   background-attachment: fixed;
-  color: #f1faee; /* Light text color for good contrast */
+}
+
+@font-face {
+  font-family: 'Heroes Legend';
+  src: url('/fonts/Heroes-Legend.ttf') format('truetype');
+  font-weight: normal;
+  font-style: normal;
 }
 
 h1 {
   text-align: center;
-  color: #ffffff;
+  color: #FFD700;
   margin-top: 20px;
-  font-size: 3rem;
+  font-size: 45px;
+  font-family: 'Heroes Legend', sans-serif;
   text-transform: uppercase;
-  letter-spacing: 3px;
-  text-shadow: 4px 4px 8px rgba(0, 0, 0, 0.5);
-  background: -webkit-linear-gradient(#e63946, #ffffff, #457b9d);
+  letter-spacing: 5px;
+  text-shadow: 
+    2px 2px 0 #000000,
+    0 0 10px #FFD700;
   -webkit-background-clip: text;
   -webkit-text-fill-color: transparent;
 }
