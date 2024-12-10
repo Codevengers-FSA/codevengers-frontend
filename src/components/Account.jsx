@@ -130,57 +130,5 @@ const Account = () => {
         )}
     </div>
 );
-        {/* {!tokenPresent && (
-
-            <form onSubmit={register}>
-                <h1>New User Registration</h1>
-                <input type="text" placeholder="First Name"
-                    onChange={((event) => { setRegisterName(event.target.value) })}
-                    value={registerName} required></input>
-
-                <input type="email" placeholder="Email"
-                    onChange={((event) => { setRegisterEmail(event.target.value) })}
-                    value={registerEmail} required></input>
-
-                <input placeholder="username"
-                    onChange={((event) => { setRegisterUsername(event.target.value) })}
-                    value={registerUsername} required ></input>
-
-                <input type="password" placeholder="Password"
-                    onChange={((event) => { setRegisterPassword(event.target.value) })}
-                    value={registerPassword} required />
-
-                <button type="submit">Register</button>
-            </form>
-        )}
-
-        {!tokenPresent && (
-
-            <form>
-                <h1>Login!</h1>
-
-                <input type="username" placeholder="username"
-                    onChange={((event) => { setInputUsername(event.target.value) })}
-                    value={inputUsername} required />
-
-                <input type="password" placeholder="password"
-                    onChange={((event) => { setInputPassword(event.target.value) })}
-                    value={inputPassword} required />
-            </form>
-        )}
-        {!tokenPresent ?
-            (<button onClick={login}>Log In!</button>
-            )
-            :
-            (<button onClick={logOut}>Logout</button>)
-        }
-        
-        {tokenPresent && <AccountDetails />}
-        </>
-    ) */}
-
 };
-
-
-
 export default Account;
