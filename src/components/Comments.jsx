@@ -23,7 +23,9 @@ const Comment = ({ comment, onReply, onDeleteComment, onDeleteReply }) => {
 
   return (
     <div className="comment">
-      <p><strong>{comment.user}</strong>: {comment.text}</p>
+      <p>
+        <strong>{comment.user?.username || 'Anonymous'}</strong>: {comment.text}
+      </p>
       {token && (
         <>
           <button onClick={() => setShowReplyForm(!showReplyForm)}>
@@ -35,7 +37,7 @@ const Comment = ({ comment, onReply, onDeleteComment, onDeleteReply }) => {
               <textarea
                 value={replyText}
                 onChange={(e) => setReplyText(e.target.value)}
-                placeholder='Write a reply...'
+                placeholder="Write a reply..."
               ></textarea>
               <button type="submit">Submit Reply</button>
             </form>
@@ -49,7 +51,9 @@ const Comment = ({ comment, onReply, onDeleteComment, onDeleteReply }) => {
         <div className="replies">
           {comment.replies.map((reply) => (
             <div key={reply.id} className="reply">
-              <p><strong>{reply.user}</strong>: {reply.text}</p>
+              <p>
+                <strong>{reply.user?.username || 'Anonymous'}</strong>: {reply.text}
+              </p>
 
               {token && (
                 <>
