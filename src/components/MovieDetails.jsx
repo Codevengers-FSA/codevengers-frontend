@@ -11,6 +11,8 @@ const MovieDetails = () => {
   const [userRating, setUserRating] = useState(0);
   const [averageRating, setAverageRating] = useState(0);
 
+  const token = localStorage.getItem('token')
+
   useEffect(() => {
     const getSingleMovie = async () => {
       try {
@@ -169,12 +171,8 @@ const MovieDetails = () => {
       )}
       <h2 id="movie-title">{selectedMovie.title}</h2>
       <p id="movie-summary">{selectedMovie.summary}</p>
-      <CommentsSection
-        movieId={id}
-        onDeleteComment={deleteComment}
-        onDeleteReply={deleteReply}
-      />
-
+      <CommentsSection movieId={id} />
+      
       <button onClick={handleAddToWatchlist}>Add to Watchlist</button>
 
       <div>
