@@ -55,7 +55,8 @@ const Watchlists = () => {
         <h2>Release Date Order</h2>
         <ul>
           {releaseDateMovies.map((movie) => (
-            <li key={movie.id}>
+            <li key={movie.id}
+            onClick={() => navigate(`/moviecatalog/${movie.id}`)}>
               <strong>{movie.title}</strong> - Release Date: {new Date(movie.releaseDate).toDateString()}
             </li>
           ))}
