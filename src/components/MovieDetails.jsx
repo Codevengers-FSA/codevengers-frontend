@@ -35,36 +35,36 @@ const MovieDetails = () => {
   }, [id]);
 
   const fetchRatingData = async () => {
-  try {
-    const token = localStorage.getItem("token");
-    if (!token) {
-      console.error("No token found. Please log in.");
-      return;
-    }
-
-    const response = await fetch(`https://codevengers-backend.onrender.com/ratings/movies/${id}/ratings`, {
-      headers: {
-        'Authorization': `Bearer ${token}`,
-      },
-    });
-
-    if (response.ok) {
-      const data = await response.json();
-      console.log("Rating data:", data);
-
-      if (data.average !== undefined && data.userRating !== undefined) {
-        setAverageRating(data.average);
-        setUserRating(data.userRating);
-      } else {
-        console.error("Invalid rating data format.");
+    try {
+      const token = localStorage.getItem("token");
+      if (!token) {
+        console.error("No token found. Please log in.");
+        return;
       }
-    } else {
-      console.error("Failed to fetch ratings.");
+
+      const response = await fetch(`https://codevengers-backend.onrender.com/ratings/movies/${id}/ratings`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Rating data:", data);
+
+        if (data.average !== undefined && data.userRating !== undefined) {
+          setAverageRating(data.average);
+          setUserRating(data.userRating);
+        } else {
+          console.error("Invalid rating data format.");
+        }
+      } else {
+        console.error("Failed to fetch ratings.");
+      }
+    } catch (error) {
+      console.error("Error fetching rating data", error);
     }
-  } catch (error) {
-    console.error("Error fetching rating data", error);
-  }
-};
+  };
 
   const handleRatingClick = async (rating) => {
     try {
@@ -100,6 +100,56 @@ const MovieDetails = () => {
     addToWatchlist(selectedMovie);
   };
 
+  const deleteComment = async (commentId) => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch(
+        `https://codevengers-backend.onrender.com/comments/${commentId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Authorization": `Bearer ${token}`,
+          },
+        }
+      );
+  
+      if (response.ok) {
+        console.log(`Comment with ID ${commentId} deleted.`);
+        setSelectedMovie((prevMovie) => ({
+          ...prevMovie,
+          comments: prevMovie.comments.filter((comment) => comment.id !== commentId),
+        }));
+      } else {
+        console.error("Failed to delete comment.");
+      }
+    } catch (error) {
+      console.error("Error deleting comment:", error);
+    }
+  };
+
+  const deleteReply = async (replyId) => {
+    try {
+      const token = localStorage.getItem("token");
+      const response = await fetch(
+        `https://codevengers-backend.onrender.com/comments/replies/${replyId}`,
+        {
+          method: "DELETE",
+          headers: {
+            "Authorization": `Bearer ${token}`,
+          },
+        }
+      );
+  
+      if (response.ok) {
+        console.log(`Reply with ID ${replyId} deleted.`);
+      } else {
+        console.error("Failed to delete reply.");
+      }
+    } catch (error) {
+      console.error("Error deleting reply:", error);
+    }
+  };
+  
   if (isLoading) {
     return <p>Loading movie details...</p>;
   }
@@ -123,10 +173,8 @@ const MovieDetails = () => {
       <p id="movie-summary">{selectedMovie.summary}</p>
       <CommentsSection movieId={id} />
       
-     {token && ( 
-    <button onClick={handleAddToWatchlist}>Add to Watchlist</button> 
-     )}
-       
+      {token && ( 
+      <button onClick={handleAddToWatchlist}>Add to Watchlist</button> )}
 
       <div>
         <h3>Rate This Movie</h3>
