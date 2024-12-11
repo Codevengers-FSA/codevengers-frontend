@@ -1,9 +1,10 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 
 const Comment = ({ comment, onReply, onDeleteComment, onDeleteReply }) => {
   const [replyText, setReplyText] = useState('');
   const [showReplyForm, setShowReplyForm] = useState(false);
-
+  const [user, setUser] = useState(comment.user);
+  
   const token = localStorage.getItem('token');
 
   const handleReplySubmit = (e) => {
@@ -24,7 +25,7 @@ const Comment = ({ comment, onReply, onDeleteComment, onDeleteReply }) => {
   return (
     <div className="comment">
       <p>
-        <strong>{comment.user?.username || 'Anonymous'}</strong>: {comment.text}
+        <strong>{user?.username || 'Anonymous'}</strong>: {comment.text}
       </p>
       {token && (
         <>
@@ -47,7 +48,7 @@ const Comment = ({ comment, onReply, onDeleteComment, onDeleteReply }) => {
         </>
       )}
 
-      {comment.replies && (
+      {comment.replies && comment.replies.length > 0 && (
         <div className="replies">
           {comment.replies.map((reply) => (
             <div key={reply.id} className="reply">
