@@ -101,3 +101,27 @@ input[type="text"]:focus {
     font-size: 2rem;
   }
 }
+
+/* Navigation Bar */
+nav {
+  padding: 10px;
+  background-color: #f5f5f5;
+  display: flex;
+  justify-content: flex-start; /* Align links to the left */
+  gap: 10px; /* Adds space between links */
+}
+
+/* Links */
+nav a {
+  text-decoration: none; /* Removes underline */
+  color: #000; /* Black text color */
+  font-size: 16px; /* Adjust font size */
+  padding: 5px 10px; /* Adds padding inside the link */
+  border-radius: 5px; /* Rounds corners */
+  background-color: #e0e0e0; /* Light gray background */
+  transition: background-color 0.3s ease; /* Smooth hover effect */
+}
+
+nav a:hover {
+  background-color: #cccccc; /* Lighter gray on hover */
+}
