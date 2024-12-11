@@ -3,10 +3,12 @@
 import React, { useEffect, useState } from "react";
 import Comment from "./Comments";
 
-const CommentsSection = ({ movieId, onDeleteComment, onDeleteReply }) => {
+const CommentsSection = ({ movieId, onDeleteReply }) => {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
   const token = localStorage.getItem('token');
+
+  console.log('token:', token)
 
   useEffect(() => {
     fetch(`https://codevengers-backend.onrender.com/comments/movies/${movieId}/comments`)
@@ -25,7 +27,10 @@ const CommentsSection = ({ movieId, onDeleteComment, onDeleteReply }) => {
 
     fetch(`https://codevengers-backend.onrender.com/comments/movies/${movieId}/comments`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+       },
       body: JSON.stringify({ text: newComment }),
     })
       .then((res) => {
@@ -41,11 +46,43 @@ const CommentsSection = ({ movieId, onDeleteComment, onDeleteReply }) => {
       .catch((err) => console.error('Failed to submit a comment: ', err));
   };
 
-  const handleReply = (commentId, replyText) => {
-    fetch(`https://codevengers-backend.onrender.com/comments/movies/${movieId}/comments/${commentId}/replies`, {
+  const handleDeleteComment = (id) => {
+    const token = localStorage.getItem('token');
+
+    if (!token) {
+      console.error('No token found');
+      return;
+    }
+
+    fetch(`https://codevengers-backend.onrender.com/comments/comments/${id}`, {
+      method: 'DELETE',
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+       },
+    })
+      .then((res) => {
+        if (!res.ok) {
+          throw new Error('Network response was not ok');
+        }
+        setComments((prevComments) =>
+          prevComments.filter((comment) => comment.id !== id)
+        );
+      })
+      .catch((err) => console.error('Failed to delete comment: ', err));
+  };
+
+  const handleReply = (id, replyText) => {
+    fetch(`https://codevengers-backend.onrender.com/comments/comments/${id}/replies`, {
       method: 'POST',
-      headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ text: replyText }),
+      headers: { 
+        'Content-Type': 'application/json',
+        'Authorization': `Bearer ${token}`,
+      },
+      body: JSON.stringify({
+        text: replyText,
+        parentId: id,
+      }),
     })
       .then((res) => {
         if (!res.ok) {
@@ -56,7 +93,7 @@ const CommentsSection = ({ movieId, onDeleteComment, onDeleteReply }) => {
       .then((newReply) => {
         setComments((prevComments) =>
           prevComments.map((comment) =>
-            comment.id === commentId
+            comment.id === id
               ? { ...comment, replies: [...comment.replies, newReply] }
               : comment
           )
@@ -70,7 +107,6 @@ const CommentsSection = ({ movieId, onDeleteComment, onDeleteReply }) => {
       {token && (
         <div className="comments-section">
           <h2>Comments</h2>
-
           <form onSubmit={handleAddComment}>
             <textarea
               value={newComment}
@@ -88,7 +124,7 @@ const CommentsSection = ({ movieId, onDeleteComment, onDeleteReply }) => {
             key={comment.id}
             comment={comment}
             onReply={handleReply}
-            onDeleteComment={onDeleteComment}
+            onDeleteComment={handleDeleteComment}
             onDeleteReply={onDeleteReply}
           />
         ))}
