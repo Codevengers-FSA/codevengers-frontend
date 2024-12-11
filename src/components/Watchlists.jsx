@@ -1,10 +1,14 @@
 import React, { useEffect, useState } from "react";
+import { useNavigate } from "react-router-dom";
+
 
 const Watchlists = () => {
   const [movies, setMovies] = useState([]);
   const [chronologicalMovies, setChronologicalMovies] = useState([]);
   const [releaseDateMovies, setReleaseDateMovies] = useState([]);
   const [isLoading, setIsLoading] = useState(true);
+  const navigate = useNavigate();
+ 
 
   useEffect(() => {
     const fetchMovies = async () => {
@@ -39,7 +43,8 @@ const Watchlists = () => {
         <h2>Chronological Order</h2>
         <ul>
           {chronologicalMovies.map((movie) => (
-            <li key={movie.id}>
+            <li key={movie.id}
+            onClick={() => navigate(`/moviecatalog/${movie.id}`)}>
               <strong>{movie.title}</strong> - Order: {movie.chronologicalOrder}
             </li>
           ))}
