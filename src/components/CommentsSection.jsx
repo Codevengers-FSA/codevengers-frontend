@@ -1,14 +1,10 @@
-// This file handles fetching, displaying, and managing the list of comments for a movie. 
-
 import React, { useEffect, useState } from "react";
 import Comment from "./Comments";
 
-const CommentsSection = ({ movieId }) => {
+const CommentsSection = ({ movieId, onDeleteComment, onDeleteReply }) => {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState('');
-  
-   const token = localStorage.getItem('token');
-
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     fetch(`https://codevengers-backend.onrender.com/comments/movies/${movieId}/comments`)
@@ -69,8 +65,7 @@ const CommentsSection = ({ movieId }) => {
 
   return (
     <>
-    {token && (
-
+      {token && (
         <div className="comments-section">
           <h2>Comments</h2>
 
@@ -82,17 +77,22 @@ const CommentsSection = ({ movieId }) => {
             />
             <button type="submit">Submit Comment</button>
           </form>
-          </div>
-          
-          )}
-          
-          <div className="comments-list">
-            {comments.map((comment) => (
-              <Comment key={comment.id} comment={comment} onReply={handleReply} />
-            ))}
-          </div>
-        </>
-    );
+        </div>
+      )}
+
+      <div className="comments-list">
+        {comments.map((comment) => (
+          <Comment
+            key={comment.id}
+            comment={comment}
+            onReply={handleReply}
+            onDeleteComment={onDeleteComment}
+            onDeleteReply={onDeleteReply}
+          />
+        ))}
+      </div>
+    </>
+  );
 };
 
 export default CommentsSection;
