@@ -1,14 +1,20 @@
 import React, { useState } from 'react';
 
-const Comment = ({ comment, onReply, onDeleteComment, onDeleteReply }) => {
+const Comment = ({ comment, onReply, onDeleteComment, onDeleteReply, username }) => {
   const [replyText, setReplyText] = useState('');
   const [showReplyForm, setShowReplyForm] = useState(false);
-
   const token = localStorage.getItem('token');
 
   const handleReplySubmit = (e) => {
     e.preventDefault();
-    onReply(comment.id, replyText);
+    console.log("Replying with username:", username); // Add this line
+
+    const newReply = {
+      id: Date.now(),
+      text: replyText,
+      user: { username: username || 'Anonymous' },
+    };
+    onReply(comment.id, newReply);
     setReplyText('');
     setShowReplyForm(false);
   };
@@ -47,7 +53,7 @@ const Comment = ({ comment, onReply, onDeleteComment, onDeleteReply }) => {
         </>
       )}
 
-      {comment.replies && (
+      {comment.replies && comment.replies.length > 0 && (
         <div className="replies">
           {comment.replies.map((reply) => (
             <div key={reply.id} className="reply">
