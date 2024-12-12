@@ -1,11 +1,12 @@
 import React, { useState } from "react";
 
-const Home = () => {
+const RecommendMoviesForm = () => {
   const [movieInput, setMovieInput] = useState("");
   const [recommendations, setRecommendations] = useState([]);
   const [loading, setLoading] = useState(false);
   const [error, setError] = useState("");
 
+  // Handle form submission
   const handleSubmit = async (e) => {
     e.preventDefault();
     setLoading(true);
@@ -35,7 +36,6 @@ const Home = () => {
 
   return (
     <div>
-      <h1>Welcome</h1>
       <h2>Get Movie Recommendations</h2>
       <form onSubmit={handleSubmit}>
         <label>
@@ -68,4 +68,4 @@ const Home = () => {
   );
 };
 
-export default Home;
+export default RecommendMoviesForm;

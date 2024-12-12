@@ -8,6 +8,7 @@ import Watchlists from './components/Watchlists';
 import MovieDetails from './components/MovieDetails';
 import Account from './components/Account';
 import AccountDetails from './components/AccountDetails';
+import RecommendedMoviesForm from './components/RecommendedMoviesForm';
 
 const App = () => {
   return (
@@ -18,8 +19,8 @@ const App = () => {
         <Route path="/moviecatalog" element={<AllMovies />} />
         <Route path="/moviecatalog/:id" element={<MovieDetails />} />
         <Route path="/watchlists" element={<Watchlists />} />
-        <Route path="/account" element={<Account />}/>
-  
+        <Route path="/account" element={<Account />} />
+        <Route path="/recommended-movies" element={<RecommendedMoviesForm />} />
       </Routes>
     </>
   );
