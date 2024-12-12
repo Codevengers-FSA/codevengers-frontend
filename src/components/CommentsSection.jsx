@@ -1,12 +1,20 @@
-// This file handles fetching, displaying, and managing the list of comments for a movie. 
-
 import React, { useEffect, useState } from "react";
 import Comment from "./Comments";
 
 const CommentsSection = ({ movieId }) => {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
+  const [username, setUsername] = useState("");
   const token = localStorage.getItem("token");
+
+  // Retrieve the username from local storage
+  useEffect(() => {
+    const storedUsername = localStorage.getItem("username");
+    if (storedUsername) {
+      setUsername(storedUsername);
+    }
+    console.log("Username retrieved from localStorage:", storedUsername);
+  }, []);
 
   // Fetch comments for the movie
   useEffect(() => {
@@ -39,6 +47,8 @@ const CommentsSection = ({ movieId }) => {
       return;
     }
 
+    console.log("Submitting comment with username:", username); // Add this line
+
     try {
       const response = await fetch(
         `https://codevengers-backend.onrender.com/comments/movies/${movieId}/comments`,
@@ -48,7 +58,7 @@ const CommentsSection = ({ movieId }) => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({ text: newComment }),
+          body: JSON.stringify({ text: newComment, user: { username: username || "Anonymous" } }),
         }
       );
 
@@ -57,6 +67,7 @@ const CommentsSection = ({ movieId }) => {
       }
 
       const addedComment = await response.json();
+      console.log("Added Comment:", addedComment); // Add this line
       setComments((prevComments) => [...prevComments, addedComment]);
       setNewComment("");
     } catch (err) {
@@ -86,20 +97,19 @@ const CommentsSection = ({ movieId }) => {
         throw new Error("Failed to delete comment");
       }
 
-      setComments((prevComments) =>
-        prevComments.filter((comment) => comment.id !== id)
-      );
+      setComments((prevComments) => prevComments.filter((comment) => comment.id !== id));
     } catch (err) {
       console.error("Error deleting comment:", err);
     }
   };
 
-  // Handle replying to a comment
   const handleReply = async (id, replyText) => {
     if (!token) {
       console.error("User not logged in");
       return;
     }
+
+    console.log("Submitting reply with username:", username); // Add this line
 
     try {
       const response = await fetch(
@@ -110,7 +120,7 @@ const CommentsSection = ({ movieId }) => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({ text: replyText, parentId: id }),
+          body: JSON.stringify({ text: replyText, parentId: id, user: { username: username || "Anonymous" } }),
         }
       );
 
@@ -119,6 +129,7 @@ const CommentsSection = ({ movieId }) => {
       }
 
       const newReply = await response.json();
+      console.log("Added Reply:", newReply); // Add this line
       setComments((prevComments) =>
         prevComments.map((comment) =>
           comment.id === id
@@ -152,6 +163,7 @@ const CommentsSection = ({ movieId }) => {
             comment={comment}
             onReply={handleReply}
             onDeleteComment={handleDeleteComment}
+            username={username}
           />
         ))}
       </div>

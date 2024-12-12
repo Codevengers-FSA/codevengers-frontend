@@ -1,15 +1,20 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState } from 'react';
 
-const Comment = ({ comment, onReply, onDeleteComment, onDeleteReply }) => {
+const Comment = ({ comment, onReply, onDeleteComment, onDeleteReply, username }) => {
   const [replyText, setReplyText] = useState('');
   const [showReplyForm, setShowReplyForm] = useState(false);
-  const [user, setUser] = useState(comment.user);
-  
   const token = localStorage.getItem('token');
 
   const handleReplySubmit = (e) => {
     e.preventDefault();
-    onReply(comment.id, replyText);
+    console.log("Replying with username:", username); // Add this line
+
+    const newReply = {
+      id: Date.now(),
+      text: replyText,
+      user: { username: username || 'Anonymous' },
+    };
+    onReply(comment.id, newReply);
     setReplyText('');
     setShowReplyForm(false);
   };
@@ -25,7 +30,7 @@ const Comment = ({ comment, onReply, onDeleteComment, onDeleteReply }) => {
   return (
     <div className="comment">
       <p>
-        <strong>{user?.username || 'Anonymous'}</strong>: {comment.text}
+        <strong>{comment.user?.username || 'Anonymous'}</strong>: {comment.text}
       </p>
       {token && (
         <>
