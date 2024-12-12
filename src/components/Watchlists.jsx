@@ -38,26 +38,28 @@ const Watchlists = () => {
   }
 
   return (
-    <div style={{ display: "flex", gap: "20px" }}>
-      <div style={{ flex: 1 }}>
-        <h2>Chronological Order</h2>
-        <ul>
+    <div className="container">
+      <div className="list-section">
+        <h2 className="list-title">Chronological Order</h2>
+        <ul className="movie-list">
           {chronologicalMovies.map((movie) => (
             <li key={movie.id}
+            className="movie-item"
             onClick={() => navigate(`/moviecatalog/${movie.id}`)}>
-              <strong>{movie.title}</strong> - Order: {movie.chronologicalOrder}
+              <strong className="movie-title">{movie.title}</strong> - Order: {movie.chronologicalOrder}
             </li>
           ))}
         </ul>
       </div>
 
-      <div style={{ flex: 1 }}>
-        <h2>Release Date Order</h2>
-        <ul>
+      <div className="list-section">
+        <h2 className="list-title">Release Date Order</h2>
+        <ul className="movie-list">
           {releaseDateMovies.map((movie) => (
             <li key={movie.id}
+            className="movie-item"
             onClick={() => navigate(`/moviecatalog/${movie.id}`)}>
-              <strong>{movie.title}</strong> - Release Date: {new Date(movie.releaseDate).toDateString()}
+              <strong className="movie-title">{movie.title}</strong> - Release Date: {new Date(movie.releaseDate).toDateString()}
             </li>
           ))}
         </ul>

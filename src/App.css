@@ -125,3 +125,52 @@ nav a {
 nav a:hover {
   background-color: #cccccc; /* Lighter gray on hover */
 }
+
+/* Container and Section Styling */
+.container {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+}
+
+.list-section {
+  flex: 1;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+/* Title Styling */
+.list-title {
+  margin-bottom: 15px;
+  color: #333;
+  font-family: Arial, sans-serif;
+}
+
+/* Movie List Styling */
+.movie-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.movie-item {
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.movie-item:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transform: translateY(-3px);
+}
+
+/* Movie Title Styling */
+.movie-title {
+  color: #007BFF;
+  font-weight: bold;
+}
