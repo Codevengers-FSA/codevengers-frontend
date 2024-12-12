@@ -7,15 +7,15 @@ const Comment = ({ comment, onReply, onDeleteComment, onDeleteReply, username })
 
   const handleReplySubmit = (e) => {
     e.preventDefault();
-    console.log("Replying with username:", username); // Add this line
 
-    const newReply = {
-      id: Date.now(),
-      text: replyText,
-      user: { username: username || 'Anonymous' },
-    };
-    onReply(comment.id, newReply);
-    setReplyText('');
+    if (!replyText.trim()) {
+      console.error("Reply text cannot be empty");
+      return;
+    }
+
+    console.log("Submitting reply with username:", username);
+    onReply(comment.id, replyText.trim()); // Pass replyText as a string
+    setReplyText("");
     setShowReplyForm(false);
   };
 
@@ -24,7 +24,7 @@ const Comment = ({ comment, onReply, onDeleteComment, onDeleteReply, username })
   };
 
   const handleDeleteReply = (replyId) => {
-    onDeleteReply(replyId);
+    onDeleteReply(replyId, comment.id); // Pass the parent comment ID
   };
 
   return (

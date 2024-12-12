@@ -47,7 +47,7 @@ const CommentsSection = ({ movieId }) => {
       return;
     }
 
-    console.log("Submitting comment with username:", username); // Add this line
+    console.log("Submitting comment with username:", username);
 
     try {
       const response = await fetch(
@@ -67,7 +67,7 @@ const CommentsSection = ({ movieId }) => {
       }
 
       const addedComment = await response.json();
-      console.log("Added Comment:", addedComment); // Add this line
+      console.log("Added Comment:", addedComment);
       setComments((prevComments) => [...prevComments, addedComment]);
       setNewComment("");
     } catch (err) {
@@ -103,42 +103,88 @@ const CommentsSection = ({ movieId }) => {
     }
   };
 
-  const handleReply = async (id, replyText) => {
+  // Handle adding a reply to a comment
+  const handleReply = async (commentId, replyText) => {
+    const token = localStorage.getItem('token');
+  
     if (!token) {
       console.error("User not logged in");
       return;
     }
-
-    console.log("Submitting reply with username:", username); // Add this line
-
+  
+    if (!replyText || typeof replyText !== "string" || replyText.trim() === "") {
+      console.error("Invalid reply text");
+      return;
+    }
+  
+    console.log("Submitting reply with username:", username);
+  
     try {
       const response = await fetch(
-        `https://codevengers-backend.onrender.com/comments/comments/${id}/replies`,
+        `https://codevengers-backend.onrender.com/comments/comments/${commentId}/replies`,
         {
           method: "POST",
           headers: {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({ text: replyText, parentId: id, user: { username: username || "Anonymous" } }),
+          body: JSON.stringify({
+            text: replyText.trim(),
+          }),
         }
       );
-
+  
       if (!response.ok) {
-        throw new Error("Failed to add reply");
+        const errorResponse = await response.json();
+        throw new Error(`Failed to add reply: ${errorResponse.message}`);
       }
-
+  
       const newReply = await response.json();
-      console.log("Added Reply:", newReply); // Add this line
+      console.log("Added Reply:", newReply);
+  
       setComments((prevComments) =>
         prevComments.map((comment) =>
-          comment.id === id
+          comment.id === commentId
             ? { ...comment, replies: [...(comment.replies || []), newReply] }
             : comment
         )
       );
     } catch (err) {
       console.error("Error adding reply:", err);
+    }
+  };  
+
+  // Handle deleting a reply
+  const handleDeleteReply = async (replyId, parentId) => {
+    if (!token) {
+      console.error("User not logged in");
+      return;
+    }
+
+    try {
+      const response = await fetch(
+        `https://codevengers-backend.onrender.com/comments/comments/replies/${replyId}`,
+        {
+          method: "DELETE",
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        }
+      );
+
+      if (!response.ok) {
+        throw new Error("Failed to delete reply");
+      }
+
+      setComments((prevComments) =>
+        prevComments.map((comment) =>
+          comment.id === parentId
+            ? { ...comment, replies: comment.replies.filter((reply) => reply.id !== replyId) }
+            : comment
+        )
+      );
+    } catch (err) {
+      console.error("Error deleting reply:", err);
     }
   };
 
@@ -163,6 +209,7 @@ const CommentsSection = ({ movieId }) => {
             comment={comment}
             onReply={handleReply}
             onDeleteComment={handleDeleteComment}
+            onDeleteReply={handleDeleteReply}
             username={username}
           />
         ))}
