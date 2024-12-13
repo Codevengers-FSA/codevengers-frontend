@@ -1,32 +1,60 @@
 import React, { useState, useEffect } from 'react';
 import { useWatchlist } from '../components/WatchlistContext';
-import { useParams } from 'react-router-dom'
 
 const AccountDetails = () => {
   const { watchlist } = useWatchlist();
   const username = localStorage.getItem('username');
   const [comments, setComments] = useState([]);
-  const { userId } = useParams();
+  const [ userId, setUserId] = useState();
+
+ 
   const [error, setError] = useState(null);
+  
   useEffect(() => {
-    const fetchUserComments = async () => {
+    const fetchUserId = async () =>{
       try {
-        const response = await fetch(`https://codevengers-backend.onrender.com/users/${userId}/comments`);
-        console.log(response)
-        if (!response.ok) {
-          throw new Error('Failed to get comments');
+        const token = localStorage.getItem('token');
+        const response = await fetch(`https://codevengers-backend.onrender.com/users/${userId}`, {
+          headers: {
+            Authorization: `Bearer ${token}`,
+          },
+        });
+        console.log('fetching commnets for userid', userId)
+        if (!response.ok){
+          throw new Error ('Failed to fetch userId')
         }
         const data = await response.json();
-        setComments(data);
-      } catch (error) {
-        console.error('Error fetching user comments:', error);
-        setError('Unable to load comments. Please try again later');
+        setUserId(data.id);
+        console.log(data)
+        console.log('user id', userId)
+      } catch(error) {
+        console.error('Error fetching user ID:', error);
+        setError('Unable to fetch user details. Please try again later.');
       }
     };
-    if (userId) {
-      fetchUserComments();
+      fetchUserId();
+    }, []);
+    
+useEffect(()=>{
+
+  const fetchUserComments = async () => {
+    try {
+      if(!userId) return;
+      const response = await fetch(`https://codevengers-backend.onrender.com/users/${userId}/comments`);
+      if (!response.ok) {
+        throw new Error('Failed to get comments');
+      }
+      const data = await response.json();
+      setComments(data);
+    } catch (error) {
+      console.error('Error fetching user comments:', error);
+      setError('Unable to load comments. Please try again later');
     }
-  }, [userId]);
+  };
+  if (userId) {
+    fetchUserComments();
+  }
+}, [userId]);
 
   return (
     <>
@@ -36,7 +64,10 @@ const AccountDetails = () => {
 
       <div className='user-comments'>
         <h1>Your Comments</h1>
-        {comments.length > 0 ? (
+        {error? (
+          <p>{error}</p>
+        ):
+        comments.length > 0 ? (
           <ul>
             {comments.map((comment) => {
               return (
