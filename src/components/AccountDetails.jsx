@@ -71,32 +71,32 @@ const AccountDetails = () => {
 
   return (
     <>
-      <div>
-        <h1>Hello {username}</h1>
+      <div className="user-profile-container">
+        <h1> Hello {username}</h1>
       </div>
 
       <div className='user-comments'>
         <h1>Your Comments</h1>
-        {error ? (
-          <p>{error}</p>
-        ) : comments.length > 0 ? (
+        {comments.length > 0 ? (
           <ul>
-            {comments.map((comment) => (
-              <li key={comment.id}>
-                <p>{comment.text}</p>
-                <button onClick={() => handleGoToComment(comment.movieId, comment.id)}>Go to Comment</button>
-              </li>
-            ))}
+            {comments.map((comment) => {
+              return (
+                <li key={comment.id}>
+                  <p>{comment.text}</p>
+                </li>
+              );
+            })}
           </ul>
         ) : (
           <p>You haven't made any comments yet.</p>
         )}
       </div>
 
-      <div>
+
+      <div className="watchlist">
         <h2>Your Watchlist</h2>
         {watchlist.length === 0 ? (
-          <p>Your watchlist is empty.</p>
+          <p className="empty">Your watchlist is empty.</p>
         ) : (
           <ul>
             {watchlist.map((movie) => (
@@ -104,7 +104,6 @@ const AccountDetails = () => {
                 <h3>{movie.title}</h3>
                 <img src={movie.image} alt={`Poster for ${movie.title}`} width="150" />
                 <p>{movie.summary}</p>
-                <button onClick={() => removeFromWatchlist(movie.id)}>Remove from Watchlist</button>
               </li>
             ))}
           </ul>

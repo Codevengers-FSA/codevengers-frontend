@@ -105,31 +105,83 @@ const Account = () => {
     };
 
     return (
-        <div>
-            {tokenPresent ? (
-                <>
-                    <AccountDetails />
-                    <button onClick={logOut}>Logout</button>
-                </>
-            ) : (
-                <>
-                    <form onSubmit={register}>
-                        <h1>New User Registration</h1>
-                        <input type="text" name="name" value={registerName} onChange={(e) => setRegisterName(e.target.value)} placeholder="First Name" required />
-                        <input type="email" name="email" value={registerEmail} onChange={(e) => setRegisterEmail(e.target.value)} placeholder="Email" required />
-                        <input name="username" value={registerUsername} onChange={(e) => setRegisterUsername(e.target.value)} placeholder="Username" required />
-                        <input type="password" name="password" value={registerPassword} onChange={(e) => setRegisterPassword(e.target.value)} placeholder="Password" required />
-                        <button type="submit">Register</button>
-                    </form>
-                    <form onSubmit={login}>
-                        <h1>Login</h1>
-                        <input name="username" value={inputUsername} onChange={(e) => setInputUsername(e.target.value)} placeholder="Username" required />
-                        <input type="password" name="password" value={inputPassword} onChange={(e) => setInputPassword(e.target.value)} placeholder="Password" required />
-                        <button type="submit">Log In</button>
-                    </form>
-                </>
-            )}
-        </div>
+        <div className="auth-container">
+        {tokenPresent ? (
+          <div className="account-details">
+            <AccountDetails />
+            <button className="logout-button" onClick={logOut}>
+              Logout
+            </button>
+          </div>
+        ) : (
+          <div className="auth-forms">
+            <form className="auth-form" onSubmit={register}>
+              <h1 className="form-title">New User Registration</h1>
+              <input
+                className="auth-input"
+                type="username"
+                name="name"
+                value={registerName}
+                onChange={(e) => setRegisterName(e.target.value)}
+                placeholder="First Name"
+                required
+              />
+              <input
+                className="auth-input"
+                type="email"
+                name="email"
+                value={registerEmail}
+                onChange={(e) => setRegisterEmail(e.target.value)}
+                placeholder="Email"
+                required
+              />
+              <input
+                className="auth-input"
+                name="username"
+                value={registerUsername}
+                onChange={(e) => setRegisterUsername(e.target.value)}
+                placeholder="Username"
+                required
+              />
+              <input
+                className="auth-input"
+                type="password"
+                name="password"
+                value={registerPassword}
+                onChange={(e) => setRegisterPassword(e.target.value)}
+                placeholder="Password"
+                required
+              />
+              <button className="auth-button" type="submit">
+                Register
+              </button>
+            </form>
+            <form className="auth-form" onSubmit={login}>
+              <h1 className="form-title">Login</h1>
+              <input
+                className="auth-input"
+                name="username"
+                value={inputUsername}
+                onChange={(e) => setInputUsername(e.target.value)}
+                placeholder="Username"
+                required
+              />
+              <input
+                className="auth-input"
+                type="password"
+                name="password"
+                value={inputPassword}
+                onChange={(e) => setInputPassword(e.target.value)}
+                placeholder="Password"
+                required
+              />
+              <button className="auth-button" type="submit">
+                Log In
+              </button>
+            </form>
+          </div>
+        )}
+      </div>
     );
 };
 
