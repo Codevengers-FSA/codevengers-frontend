@@ -1,12 +1,14 @@
 import React, { useState, useEffect } from 'react';
 import { useWatchlist } from '../components/WatchlistContext';
+import { useNavigate } from 'react-router-dom'; // Correct hook for navigation
 
 const AccountDetails = () => {
-  const { watchlist } = useWatchlist();
+  const { watchlist, removeFromWatchlist } = useWatchlist();
   const username = localStorage.getItem('username');
   const [comments, setComments] = useState([]);
   const [userId, setUserId] = useState(null);
   const [error, setError] = useState(null);
+  const navigate = useNavigate(); // Initialize navigate
 
   // Utility function to parse JWT
   const parseJwt = (token) => {
@@ -58,6 +60,10 @@ const AccountDetails = () => {
     }
   }, [userId]);
 
+  const handleGoToComment = (movieId, commentId) => {
+    navigate(`/moviecatalog/${movieId}`);
+  };
+
   return (
     <>
       <div>
@@ -73,6 +79,7 @@ const AccountDetails = () => {
             {comments.map((comment) => (
               <li key={comment.id}>
                 <p>{comment.text}</p>
+                <button onClick={() => handleGoToComment(comment.movieId, comment.id)}>Go to Comment</button>
               </li>
             ))}
           </ul>
@@ -92,6 +99,7 @@ const AccountDetails = () => {
                 <h3>{movie.title}</h3>
                 <img src={movie.image} alt={`Poster for ${movie.title}`} width="150" />
                 <p>{movie.summary}</p>
+                <button onClick={() => removeFromWatchlist(movie.id)}>Remove from Watchlist</button>
               </li>
             ))}
           </ul>
