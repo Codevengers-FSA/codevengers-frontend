@@ -10,7 +10,7 @@ const AccountDetails = () => {
   const [watchedMovies, setWatchedMovies] = useState([]);
   const [userId, setUserId] = useState(null);
   const [error, setError] = useState(null);
-  const navigate = useNavigate();  // Ensure this is defined once
+  const navigate = useNavigate();
 
   const parseJwt = (token) => {
     var base64Url = token.split('.')[1];
@@ -35,7 +35,7 @@ const AccountDetails = () => {
       } catch (error) {
         console.error('Error fetching user ID:', error);
         setError('Unable to fetch user details. Please try again later.');
-        navigate('/account', { replace: true }); // Navigate to login if no token
+        navigate('/account', { replace: true });
       }
     };
     fetchUserId();
