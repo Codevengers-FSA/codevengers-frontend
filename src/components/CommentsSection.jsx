@@ -7,7 +7,8 @@ const CommentsSection = ({ movieId }) => {
   const [newComment, setNewComment] = useState("");
   const [username, setUsername] = useState("");
   const token = localStorage.getItem("token");
-
+  
+ 
   // Retrieve the username from local storage
   useEffect(() => {
     const storedUsername = localStorage.getItem("username");
@@ -190,9 +191,10 @@ const CommentsSection = ({ movieId }) => {
   };
 
   const handleUpdateComment = async (id, newText) =>{
-    const userId = localStorage.getItem('userId')
+   // const userId = localStorage.getItem('userId')
+    const token = localStorage.getItem('token');
     if(!token) {
-      console.error('User not loged in');
+      console.error('User not logged in');
       return;
     }
 
@@ -206,8 +208,8 @@ const CommentsSection = ({ movieId }) => {
           },
           body: JSON.stringify({ 
             text: newText, 
-            id: id,
-            userid: userId,
+            // id: id,
+            // userid: userId,
            }),
         }
       );
@@ -217,7 +219,7 @@ const CommentsSection = ({ movieId }) => {
       const updatedComment = await response.json();
       setComments((prevComments)=>
         prevComments.map((comment)=>
-        comment.id === id ? {comment, text: updatedComment.text} : comment
+        comment.id === id ? updatedComment: comment
         )
       );
     } catch (err) {

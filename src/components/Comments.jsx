@@ -18,7 +18,7 @@ const Comment = ({ comment, onReply, onDeleteComment, onDeleteReply, username, o
       console.error("Comment text cannot be empty");
       return;
     }
-    onUpdateComment(comment.id, editedText.trim());
+    onUpdateComment( comment.id, editedText.trim());
     setIsEditing(false)
   }
 
@@ -47,7 +47,7 @@ const Comment = ({ comment, onReply, onDeleteComment, onDeleteReply, username, o
   return (
     <div className="comment" id={`comment-${comment.id}`}>
         <p>
-          <strong>{comment.user?.username || 'Anonymous'}</strong>: {comment.text}
+          <strong>{username || 'Anonymous'}</strong>:{" "}
       { isEditing ? (
         <input 
         type='text'
