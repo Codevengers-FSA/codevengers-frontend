@@ -40,7 +40,7 @@ const Watchlists = () => {
   return (
     <div className="container">
       <div className="list-section">
-        <h2 className="list-title">Chronological Order</h2>
+        <h2 className="list-title">Timeline Order</h2>
         <ul className="movie-list">
           {chronologicalMovies.map((movie) => (
             <li key={movie.id}

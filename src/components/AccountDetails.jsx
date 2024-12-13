@@ -121,63 +121,71 @@ const AccountDetails = () => {
     navigate(`/moviecatalog/${movieId}`);
   };
 
+  const removeFromWatchedMovies = (movieId) => {
+    setWatchedMovieIds(prevIds => prevIds.filter(id => id !== movieId));
+    setWatchedMovies(prevMovies => prevMovies.filter(movie => movie.id !== movieId));
+  };
+
   return (
     <>
       <div className="user-profile-container">
         <h1>Hello {username}</h1>
       </div>
 
-      <div className='user-comments'>
-        <h1>Your Comments</h1>
-        {error ? (
-          <p>{error}</p>
-        ) : comments.length > 0 ? (
-          <ul>
-            {comments.map((comment) => (
-              <li key={comment.id}>
-                <p>{comment.text}</p>
-                <button onClick={() => handleGoToComment(comment.movieId, comment.id)}>Go to Comment</button>
-              </li>
-            ))}
-          </ul>
-        ) : (
-          <p>You haven't made any comments yet.</p>
-        )}
-      </div>
+      <div className="columns-container">
+        <div className="column user-comments">
+          <h2>Your Comments</h2>
+          {error ? (
+            <p>{error}</p>
+          ) : comments.length > 0 ? (
+            <ul>
+              {comments.map((comment) => (
+                <li key={comment.id}>
+                  <p>{comment.text}</p>
+                  <button onClick={() => handleGoToComment(comment.movieId, comment.id)}>Go to Comment</button>
+                </li>
+              ))}
+            </ul>
+          ) : (
+            <p>You haven't made any comments yet.</p>
+          )}
+        </div>
 
-      <div className="watchlist">
-        <h2>Your Watched Movies</h2>
-        {watchedMovies.length === 0 ? (
-          <p className="empty">You haven't watched any movies yet.</p>
-        ) : (
-          <ul>
-            {watchedMovies.map((movie) => (
-              <li key={movie.id}>
-                <h3>{movie.title}</h3>
-                <img src={movie.image} alt={`Poster for ${movie.title}`} width="150" />
-                <p>{movie.summary}</p>
-              </li>
-            ))}
-          </ul>
-        )}
-      </div>
+        <div className="column watchlist">
+          <h2>Your Watched Movies</h2>
+          {watchedMovies.length === 0 ? (
+            <p className="empty">You haven't watched any movies yet.</p>
+          ) : (
+            <ul>
+              {watchedMovies.map((movie) => (
+                <li key={movie.id}>
+                  <h3>{movie.title}</h3>
+                  <img src={movie.image} alt={`Poster for ${movie.title}`} width="150" />
+                  <p>{movie.summary}</p>
+                  <button onClick={() => removeFromWatchedMovies(movie.id)}>Remove from Watched Movies</button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
 
-      <div className="watchlist">
-        <h2>Your Watchlist</h2>
-        {watchlist.length === 0 ? (
-          <p>Your watchlist is empty.</p>
-        ) : (
-          <ul>
-            {watchlist.map((movie) => (
-              <li key={movie.id}>
-                <h3>{movie.title}</h3>
-                <img src={movie.image} alt={`Poster for ${movie.title}`} width="150" />
-                <p>{movie.summary}</p>
-                <button onClick={() => removeFromWatchlist(movie.id)}>Remove from Watchlist</button>
-              </li>
-            ))}
-          </ul>
-        )}
+        <div className="column watchlist">
+          <h2>Your Watchlist</h2>
+          {watchlist.length === 0 ? (
+            <p>Your watchlist is empty.</p>
+          ) : (
+            <ul>
+              {watchlist.map((movie) => (
+                <li key={movie.id}>
+                  <h3>{movie.title}</h3>
+                  <img src={movie.image} alt={`Poster for ${movie.title}`} width="150" />
+                  <p>{movie.summary}</p>
+                  <button onClick={() => removeFromWatchlist(movie.id)}>Remove from Watchlist</button>
+                </li>
+              ))}
+            </ul>
+          )}
+        </div>
       </div>
     </>
   );
