@@ -12,7 +12,7 @@ const AllMovies = () => {
         const response = await fetch("https://codevengers-backend.onrender.com/movies");
         const movieData = await response.json();
         console.log("API Response:", movieData);
-  
+
         if (Array.isArray(movieData)) {
           setMovies(movieData);
           const sortedMovies = movieData.sort((a, b) => a.id - b.id);
@@ -23,7 +23,7 @@ const AllMovies = () => {
         console.error("Error fetching movies:", e);
       }
     };
-  
+
     getMovies();
   }, []);
 
@@ -58,7 +58,7 @@ const AllMovies = () => {
               <h3>{movie.title}</h3>
               {movie.image ? (
                 <img
-                  src={movie.image}
+                  src={`https://codevengers-backend.onrender.com${movie.image}`}
                   alt={`${movie.title} Poster`}
                   height="350"
                   width="250"
