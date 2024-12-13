@@ -123,7 +123,7 @@ const AccountDetails = () => {
 
   return (
     <>
-      <div>
+      <div className="user-profile-container">
         <h1>Hello {username}</h1>
       </div>
 
@@ -145,10 +145,10 @@ const AccountDetails = () => {
         )}
       </div>
 
-      <div>
+      <div className="watchlist">
         <h2>Your Watched Movies</h2>
         {watchedMovies.length === 0 ? (
-          <p>You haven't watched any movies yet.</p>
+          <p className="empty">You haven't watched any movies yet.</p>
         ) : (
           <ul>
             {watchedMovies.map((movie) => (
@@ -162,7 +162,7 @@ const AccountDetails = () => {
         )}
       </div>
 
-      <div>
+      <div className="watchlist">
         <h2>Your Watchlist</h2>
         {watchlist.length === 0 ? (
           <p>Your watchlist is empty.</p>
