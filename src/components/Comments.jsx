@@ -1,9 +1,26 @@
 import React, { useState } from 'react';
 
-const Comment = ({ comment, onReply, onDeleteComment, onDeleteReply, username }) => {
+const Comment = ({ comment, onReply, onDeleteComment, onDeleteReply, username, onUpdateComment }) => {
   const [replyText, setReplyText] = useState('');
   const [showReplyForm, setShowReplyForm] = useState(false);
+  const [ isEditing, setIsEditing] = useState(false);
+  const [editedText, setEditedText]= useState(comment.text);
+  //const [ comment, setComment] = useState();
   const token = localStorage.getItem('token');
+
+  const handleEditCLick = () => {
+    setIsEditing(true)
+  };
+
+  const handleSaveClick = () => {
+    const userId = localStorage.getItem('userId')
+    if( editedText.trim() === "") {
+      console.error("Comment text cannot be empty");
+      return;
+    }
+    onUpdateComment(comment.id, editedText.trim());
+    setIsEditing(false)
+  }
 
   const handleReplySubmit = (e) => {
     e.preventDefault();
@@ -29,11 +46,26 @@ const Comment = ({ comment, onReply, onDeleteComment, onDeleteReply, username })
 
   return (
     <div className="comment" id={`comment-${comment.id}`}>
-      <p>
-        <strong>{comment.user?.username || 'Anonymous'}</strong>: {comment.text}
-      </p>
+        <p>
+          <strong>{comment.user?.username || 'Anonymous'}</strong>: {comment.text}
+      { isEditing ? (
+        <input 
+        type='text'
+        value={editedText}
+        onChange={(e)=>setEditedText(e.target.value)}
+        />
+      ) : (
+        comment.text
+      )}
+        </p>
+
       {token && (
         <>
+        { isEditing ?(
+          <button onClick={handleSaveClick}>Save</button>
+        ) : (
+          <>
+          <button onClick={handleEditCLick}>Edit</button>
           <button onClick={() => setShowReplyForm(!showReplyForm)}>
             {showReplyForm ? 'Cancel' : 'Reply'}
           </button>
@@ -48,10 +80,14 @@ const Comment = ({ comment, onReply, onDeleteComment, onDeleteReply, username })
               <button type="submit">Submit Reply</button>
             </form>
           )}
-
+        
           <button onClick={handleDeleteComment}>Delete Comment</button>
         </>
-      )}
+        )}
+        </>
+)}
+        
+      
 
       {comment.replies && comment.replies.length > 0 && (
         <div className="replies">
