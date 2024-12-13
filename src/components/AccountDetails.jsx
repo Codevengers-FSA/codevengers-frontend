@@ -173,7 +173,6 @@ const AccountDetails = () => {
                 <li key={movie.id}>
                   <h3>{movie.title}</h3>
                   <img src={movie.image} alt={`Poster for ${movie.title}`} width="150" />
-                  <p>{movie.summary}</p>
                   <button onClick={() => removeFromWatchedMovies(movie.id)}>Remove from Watched Movies</button>
                 </li>
               ))}
@@ -191,7 +190,6 @@ const AccountDetails = () => {
                 <li key={movie.id}>
                   <h3>{movie.title}</h3>
                   <img src={movie.image} alt={`Poster for ${movie.title}`} width="150" />
-                  <p>{movie.summary}</p>
                   <button onClick={() => removeFromWatchlist(movie.id)}>Remove from Watchlist</button>
                 </li>
               ))}
