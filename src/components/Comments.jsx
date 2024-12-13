@@ -28,7 +28,7 @@ const Comment = ({ comment, onReply, onDeleteComment, onDeleteReply, username })
   };
 
   return (
-    <div className="comment">
+    <div className="comment" id={`comment-${comment.id}`}>
       <p>
         <strong>{comment.user?.username || 'Anonymous'}</strong>: {comment.text}
       </p>
@@ -56,7 +56,7 @@ const Comment = ({ comment, onReply, onDeleteComment, onDeleteReply, username })
       {comment.replies && comment.replies.length > 0 && (
         <div className="replies">
           {comment.replies.map((reply) => (
-            <div key={reply.id} className="reply">
+            <div key={reply.id} className="reply" id={`reply-${reply.id}`}>
               <p>
                 <strong>{reply.user?.username || 'Anonymous'}</strong>: {reply.text}
               </p>

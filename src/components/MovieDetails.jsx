@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react';
-import { useParams } from 'react-router-dom';
+import { useParams, useLocation } from 'react-router-dom';
 import { useWatchlist } from './WatchlistContext';
 import CommentsSection from './CommentsSection';
 
 const MovieDetails = () => {
   const { id } = useParams();
+  const location = useLocation();
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const { addToWatchlist, watchlist } = useWatchlist();
@@ -75,6 +76,17 @@ const MovieDetails = () => {
     const movieInWatchlist = watchlist.some(movie => movie.id === selectedMovie?.id);
     setIsInWatchlist(movieInWatchlist);
   }, [watchlist, selectedMovie]);
+
+  useEffect(() => {
+    const params = new URLSearchParams(location.search);
+    const commentId = params.get('comment');
+    if (commentId) {
+      const commentElement = document.getElementById(`comment-${commentId}`);
+      if (commentElement) {
+        commentElement.scrollIntoView({ behavior: 'smooth' });
+      }
+    }
+  }, [location.search]);
 
   const handleRatingClick = async (rating) => {
     try {
