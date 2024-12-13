@@ -12,8 +12,41 @@ const MovieDetails = () => {
   const [userRating, setUserRating] = useState(0);
   const [averageRating, setAverageRating] = useState(0);
   const [isInWatchlist, setIsInWatchlist] = useState(false);
+  const [isWatched, setIsWatched] = useState(false); // New state for watched status
 
   const token = localStorage.getItem('token');
+  const username = localStorage.getItem('username'); // Assuming username is stored in local storage
+
+  const fetchRatingData = async () => {
+    try {
+      if (!token) {
+        console.error("No token found. Please log in.");
+        return;
+      }
+
+      const response = await fetch(`https://codevengers-backend.onrender.com/ratings/movies/${id}/ratings`, {
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+
+      if (response.ok) {
+        const data = await response.json();
+        console.log("Rating data:", data);
+
+        if (data.average !== undefined && data.userRating !== undefined) {
+          setAverageRating(data.average);
+          setUserRating(data.userRating);
+        } else {
+          console.error("Invalid rating data format.");
+        }
+      } else {
+        console.error("Failed to fetch ratings.");
+      }
+    } catch (error) {
+      console.error("Error fetching rating data", error);
+    }
+  };
 
   useEffect(() => {
     const getSingleMovie = async () => {
@@ -37,37 +70,6 @@ const MovieDetails = () => {
   }, [id]);
 
   useEffect(() => {
-    const fetchRatingData = async () => {
-      try {
-        if (!token) {
-          console.error("No token found. Please log in.");
-          return;
-        }
-
-        const response = await fetch(`https://codevengers-backend.onrender.com/ratings/movies/${id}/ratings`, {
-          headers: {
-            'Authorization': `Bearer ${token}`,
-          },
-        });
-
-        if (response.ok) {
-          const data = await response.json();
-          console.log("Rating data:", data);
-
-          if (data.average !== undefined && data.userRating !== undefined) {
-            setAverageRating(data.average);
-            setUserRating(data.userRating);
-          } else {
-            console.error("Invalid rating data format.");
-          }
-        } else {
-          console.error("Failed to fetch ratings.");
-        }
-      } catch (error) {
-        console.error("Error fetching rating data", error);
-      }
-    };
-
     fetchRatingData();
   }, [id, token]);
 
@@ -119,6 +121,41 @@ const MovieDetails = () => {
     setIsInWatchlist(true); // Set state to indicate the movie is in the watchlist
   };
 
+  const handleWatched = async () => {
+    try {
+      const username = localStorage.getItem('username'); // Make sure this is correctly retrieved
+      const token = localStorage.getItem('token'); // Make sure this is correctly retrieved
+
+      console.log("Retrieved Username:", username); // Add this line to verify
+      console.log("Retrieved Token:", token); // This is already in place
+
+      if (!username || !token) {
+        console.error("Username or token is missing.");
+        return;
+      }
+
+      const response = await fetch(
+        `https://codevengers-backend.onrender.com/users/${username}/watched`,
+        {
+          method: "POST",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ movieId: id }),
+        }
+      );
+
+      if (response.ok) {
+        setIsWatched(true); // Set state to indicate the movie is watched
+      } else {
+        console.error("Failed to update watched status.");
+      }
+    } catch (error) {
+      console.error("Error updating watched status", error);
+    }
+  };
+
   const deleteComment = async (commentId) => {
     try {
       const token = localStorage.getItem("token");
@@ -165,7 +202,7 @@ const MovieDetails = () => {
         console.error("Failed to delete reply.");
       }
     } catch (error) {
-      console.error("Error deleting reply:", error);
+      console.error("Error deleting reply.", error);
     }
   };
 
@@ -197,6 +234,12 @@ const MovieDetails = () => {
       )}
 
       {isInWatchlist && <p>Added to Watchlist!</p>}
+
+      {token && !isWatched && (
+        <button onClick={handleWatched}>I've Watched This</button>
+      )}
+
+      {isWatched && <p>You've watched this movie!</p>}
 
       <div>
         <h3>Rate This Movie</h3>

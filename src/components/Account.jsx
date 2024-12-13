@@ -33,10 +33,14 @@ const Account = () => {
             const tokenObj = await response.json();
             if (response.ok) {
                 const accessToken = tokenObj.token;
+                const userId = tokenObj.user.id; // Assuming the response includes the user ID
+
                 setToken(accessToken);
                 localStorage.setItem('token', accessToken);
+                localStorage.setItem('userId', userId); // Store userId in local storage
                 localStorage.setItem('username', registerUsername);
 
+                console.log("User ID stored in local storage:", userId); // Verify in console
                 setTokenPresent(true);
             } else {
                 console.error('Registration failed', tokenObj);
@@ -71,20 +75,24 @@ const Account = () => {
                 })
             });
 
-            localStorage.setItem('username', inputUsername);
-            setInputUsername('');
-            setInputPassword('');
-
             const object = await userResponse.json();
-
             if (userResponse.ok) {
                 const accessToken = object.token;
+                const userId = object.user.id; // Assuming the response includes the user ID
+
                 setToken(accessToken);
                 localStorage.setItem('token', accessToken);
+                localStorage.setItem('userId', userId); // Store userId in local storage
+                localStorage.setItem('username', inputUsername);
+
+                console.log("User ID stored in local storage:", userId); // Verify in console
                 setTokenPresent(true);
             } else {
                 console.error('Login failed:', object);
             }
+
+            setInputUsername('');
+            setInputPassword('');
         } catch (error) {
             console.error('Error during login:', error);
         }
@@ -92,6 +100,7 @@ const Account = () => {
 
     const logOut = () => {
         localStorage.removeItem('token');
+        localStorage.removeItem('userId'); // Clear userId from local storage
         setTokenPresent(false);
     };
 
