@@ -359,21 +359,6 @@ nav a:hover {
   transform: translateY(-2px);
 }
 
-/* Account Details Section */
-.account-details {
-  display: flex;
-  flex-direction: column;
-  align-items: center;
-  gap: 20px;
-  width: 100%;
-  max-width: 400px;
-  background: #ffffff;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  padding: 20px;
-  text-align: center;
-}
-
 /* User Greeting */
 h1 {
   font-size: 2rem;
