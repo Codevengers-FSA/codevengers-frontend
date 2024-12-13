@@ -107,20 +107,7 @@ nav {
   padding: 10px;
   background-color: #f5f5f5;
   display: flex;
-  justify-content: space-between; /* Adjust spacing between elements */
-  align-items: center; /* Center the items vertically */
-}
-
-nav .nav-left {
-  display: flex;
   align-items: center;
-  gap: 10px; /* Adds space between Log Out button and links */
-}
-
-nav .nav-right {
-  display: flex;
-  align-items: center;
-  gap: 10px; /* Adds space between links */
 }
 
 nav a {
@@ -138,14 +125,16 @@ nav a:hover {
 }
 
 .logout-button {
-  font-size: 16px;
-  padding: 5px 10px;
+  font-size: 24px; /* Further increased font size */
+  padding: 15px 30px; /* Further increased padding */
   color: #fff;
   background-color: #dc3545;
   border: none;
   border-radius: 5px;
   cursor: pointer;
   transition: background-color 0.3s ease, transform 0.2s ease;
+  display: block; /* Make the button a block element */
+  margin: 10px auto; /* Center the button and add margin */
 }
 
 .logout-button:hover {
