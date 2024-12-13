@@ -5,77 +5,76 @@ const AccountDetails = () => {
   const { watchlist } = useWatchlist();
   const username = localStorage.getItem('username');
   const [comments, setComments] = useState([]);
-  const [ userId, setUserId] = useState();
-
- 
+  const [userId, setUserId] = useState(null);
   const [error, setError] = useState(null);
-  
+
+  // Utility function to parse JWT
+  const parseJwt = (token) => {
+    var base64Url = token.split('.')[1];
+    var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
+    var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
+        return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
+    }).join(''));
+
+    return JSON.parse(jsonPayload);
+  };
+
   useEffect(() => {
-    const fetchUserId = async () =>{
+    const fetchUserId = async () => {
       try {
         const token = localStorage.getItem('token');
-        const response = await fetch(`https://codevengers-backend.onrender.com/users/${userId}`, {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        });
-        console.log('fetching commnets for userid', userId)
-        if (!response.ok){
-          throw new Error ('Failed to fetch userId')
+        if (token) {
+          const decodedToken = parseJwt(token); // Decode the token using parseJwt function
+          console.log("Decoded Token:", decodedToken); // Debugging log
+          setUserId(decodedToken.id); // Set the user ID
+        } else {
+          throw new Error('No token found');
         }
-        const data = await response.json();
-        setUserId(data.id);
-        console.log(data)
-        console.log('user id', userId)
-      } catch(error) {
+      } catch (error) {
         console.error('Error fetching user ID:', error);
         setError('Unable to fetch user details. Please try again later.');
       }
     };
-      fetchUserId();
-    }, []);
-    
-useEffect(()=>{
-
-  const fetchUserComments = async () => {
-    try {
-      if(!userId) return;
-      const response = await fetch(`https://codevengers-backend.onrender.com/users/${userId}/comments`);
-      if (!response.ok) {
-        throw new Error('Failed to get comments');
+    fetchUserId();
+  }, []);
+  
+  useEffect(() => {
+    const fetchUserComments = async () => {
+      try {
+        if (!userId) return;
+        const response = await fetch(`https://codevengers-backend.onrender.com/users/${userId}/comments`);
+        if (!response.ok) {
+          throw new Error('Failed to get comments');
+        }
+        const data = await response.json();
+        setComments(data);
+      } catch (error) {
+        console.error('Error fetching user comments:', error);
+        setError('Unable to load comments. Please try again later.');
       }
-      const data = await response.json();
-      setComments(data);
-    } catch (error) {
-      console.error('Error fetching user comments:', error);
-      setError('Unable to load comments. Please try again later');
+    };
+    if (userId) {
+      fetchUserComments();
     }
-  };
-  if (userId) {
-    fetchUserComments();
-  }
-}, [userId]);
+  }, [userId]);
 
   return (
     <>
       <div>
-        <h1> Hello {username}</h1>
+        <h1>Hello {username}</h1>
       </div>
 
       <div className='user-comments'>
         <h1>Your Comments</h1>
-        {error? (
+        {error ? (
           <p>{error}</p>
-        ):
-        comments.length > 0 ? (
+        ) : comments.length > 0 ? (
           <ul>
-            {comments.map((comment) => {
-              return (
-                <li key={comment.id}>
-                  <p>{comment.text}</p>
-                </li>
-              );
-            })}
+            {comments.map((comment) => (
+              <li key={comment.id}>
+                <p>{comment.text}</p>
+              </li>
+            ))}
           </ul>
         ) : (
           <p>You haven't made any comments yet.</p>
