@@ -10,12 +10,16 @@ const Account = () => {
     const [inputUsername, setInputUsername] = useState('');
     const [inputPassword, setInputPassword] = useState('');
 
-    const [token, setToken] = useState({});
-    const [tokenPresent, setTokenPresent] = useState(false);
+    const [token, setToken] = useState(localStorage.getItem('token') || {});
+    const [tokenPresent, setTokenPresent] = useState(!!localStorage.getItem('token'));
+
+    useEffect(() => {
+        setTokenPresent(!!localStorage.getItem('token'));
+    }, []);
 
     const register = async (event) => {
         event.preventDefault();
-
+    
         try {
             const response = await fetch('https://codevengers-backend.onrender.com/auth/register', {
                 method: 'POST',
@@ -29,23 +33,25 @@ const Account = () => {
                     password: registerPassword
                 }),
             });
-
+    
             const tokenObj = await response.json();
-            if (response.ok) {
+            console.log('Register response:', tokenObj); // Log the response object
+    
+            if (response.ok && tokenObj.user) {
                 const accessToken = tokenObj.token;
-                const userId = tokenObj.user.id; // Assuming the response includes the user ID
-
+                const userId = tokenObj.user.id;
+    
                 setToken(accessToken);
                 localStorage.setItem('token', accessToken);
-                localStorage.setItem('userId', userId); // Store userId in local storage
+                localStorage.setItem('userId', userId);
                 localStorage.setItem('username', registerUsername);
-
-                console.log("User ID stored in local storage:", userId); // Verify in console
+    
+                console.log("User ID stored in local storage:", userId);
                 setTokenPresent(true);
             } else {
-                console.error('Registration failed', tokenObj);
+                console.error('Invalid registration response:', tokenObj);
             }
-
+    
             setRegisterName('');
             setRegisterEmail('');
             setRegisterUsername('');
@@ -54,15 +60,10 @@ const Account = () => {
             console.error('Error during registration, Sorry!', error);
         }
     };
-
-    useEffect(() => {
-        const token = localStorage.getItem('token');
-        setTokenPresent(!!token);
-    }, []);
-
+    
     const login = async (event) => {
         event.preventDefault();
-
+    
         try {
             const userResponse = await fetch('https://codevengers-backend.onrender.com/auth/login', {
                 method: "POST",
@@ -74,33 +75,35 @@ const Account = () => {
                     password: inputPassword
                 })
             });
-
+    
             const object = await userResponse.json();
-            if (userResponse.ok) {
+            console.log('Login response:', object); // Log the response object
+    
+            if (userResponse.ok && object.user) {
                 const accessToken = object.token;
-                const userId = object.user.id; // Assuming the response includes the user ID
-
+                const userId = object.user.id;
+    
                 setToken(accessToken);
                 localStorage.setItem('token', accessToken);
-                localStorage.setItem('userId', userId); // Store userId in local storage
+                localStorage.setItem('userId', userId);
                 localStorage.setItem('username', inputUsername);
-
-                console.log("User ID stored in local storage:", userId); // Verify in console
+    
+                console.log("User ID stored in local storage:", userId);
                 setTokenPresent(true);
             } else {
-                console.error('Login failed:', object);
+                console.error('Invalid login response:', object);
             }
-
+    
             setInputUsername('');
             setInputPassword('');
         } catch (error) {
             console.error('Error during login:', error);
         }
-    };
+    };    
 
     const logOut = () => {
         localStorage.removeItem('token');
-        localStorage.removeItem('userId'); // Clear userId from local storage
+        localStorage.removeItem('userId');
         setTokenPresent(false);
     };
 
