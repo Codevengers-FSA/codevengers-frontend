@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useWatchlist } from '../components/WatchlistContext';
-import { useNavigate } from 'react-router-dom'; // Correct hook for navigation
+import { useNavigate } from 'react-router-dom';
 
 const AccountDetails = () => {
   const { watchlist, removeFromWatchlist } = useWatchlist();
@@ -8,9 +8,8 @@ const AccountDetails = () => {
   const [comments, setComments] = useState([]);
   const [userId, setUserId] = useState(null);
   const [error, setError] = useState(null);
-  const navigate = useNavigate(); // Initialize navigate
+  const navigate = useNavigate();
 
-  // Utility function to parse JWT
   const parseJwt = (token) => {
     var base64Url = token.split('.')[1];
     var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
@@ -26,9 +25,8 @@ const AccountDetails = () => {
       try {
         const token = localStorage.getItem('token');
         if (token) {
-          const decodedToken = parseJwt(token); // Decode the token using parseJwt function
-          console.log("Decoded Token:", decodedToken); // Debugging log
-          setUserId(decodedToken.id); // Set the user ID
+          const decodedToken = parseJwt(token);
+          setUserId(decodedToken.id);
         } else {
           throw new Error('No token found');
         }
@@ -39,12 +37,20 @@ const AccountDetails = () => {
     };
     fetchUserId();
   }, []);
-  
+
   useEffect(() => {
     const fetchUserComments = async () => {
       try {
-        if (!userId) return;
-        const response = await fetch(`https://codevengers-backend.onrender.com/users/${userId}/comments`);
+        if (!userId || !username) {
+          console.log('User ID or username not set yet');
+          return;
+        }
+        const token = localStorage.getItem('token');
+        const response = await fetch(`https://codevengers-backend.onrender.com/users/${username}/comments`, {
+          headers: {
+            'Authorization': `Bearer ${token}`
+          }
+        });
         if (!response.ok) {
           throw new Error('Failed to get comments');
         }
@@ -55,10 +61,9 @@ const AccountDetails = () => {
         setError('Unable to load comments. Please try again later.');
       }
     };
-    if (userId) {
-      fetchUserComments();
-    }
-  }, [userId]);
+
+    fetchUserComments();
+  }, [userId, username]);
 
   const handleGoToComment = (movieId, commentId) => {
     navigate(`/moviecatalog/${movieId}`);
