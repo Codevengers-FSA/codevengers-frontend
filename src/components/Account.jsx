@@ -89,24 +89,13 @@ const Account = () => {
         }
     };
 
-    const logOut = () => {
-        localStorage.removeItem('token');
-        localStorage.removeItem('userId');
-        localStorage.removeItem('username');
-        setTokenPresent(false);
-        navigate('/account');
-    };
-
     return (
       <div className="auth-container">
       {tokenPresent ? (
         <div className="account-details">
           <AccountDetails />
-          <button className="logout-button" onClick={logOut}>
-            Logout
-          </button>
-        </div>
-      ) : (
+      </div>
+      ) : ( 
         <div className="auth-forms">
           <form className="auth-form" onSubmit={register}>
             <h1 className="form-title">New User Registration</h1>
@@ -173,7 +162,7 @@ const Account = () => {
             </button>
           </form>
         </div>
-      )}
+      )} 
     </div>
   );
 };
