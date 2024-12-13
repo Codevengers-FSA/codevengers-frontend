@@ -6,8 +6,8 @@ const AccountDetails = () => {
   const { watchlist, removeFromWatchlist } = useWatchlist();
   const username = localStorage.getItem('username');
   const [comments, setComments] = useState([]);
-  const [watchedMovieIds, setWatchedMovieIds] = useState([]); // New state for watched movie IDs
-  const [watchedMovies, setWatchedMovies] = useState([]); // New state for watched movie details
+  const [watchedMovieIds, setWatchedMovieIds] = useState([]);
+  const [watchedMovies, setWatchedMovies] = useState([]);
   const [userId, setUserId] = useState(null);
   const [error, setError] = useState(null);
   const navigate = useNavigate();
@@ -35,18 +35,20 @@ const AccountDetails = () => {
       } catch (error) {
         console.error('Error fetching user ID:', error);
         setError('Unable to fetch user details. Please try again later.');
+        navigate('/login'); // Navigate to login if no token
       }
     };
     fetchUserId();
-  }, []);
+  }, [navigate]);
 
   useEffect(() => {
+    if (!userId || !username) {
+      console.log('User ID or username not set yet');
+      return;
+    }
+
     const fetchUserComments = async () => {
       try {
-        if (!userId || !username) {
-          console.log('User ID or username not set yet');
-          return;
-        }
         const token = localStorage.getItem('token');
         const response = await fetch(`https://codevengers-backend.onrender.com/users/${username}/comments`, {
           headers: {
@@ -70,10 +72,6 @@ const AccountDetails = () => {
   useEffect(() => {
     const fetchWatchedMovies = async () => {
       try {
-        if (!username) {
-          console.log('Username not set yet');
-          return;
-        }
         const token = localStorage.getItem('token');
         const response = await fetch(`https://codevengers-backend.onrender.com/users/${username}/watched`, {
           headers: {
@@ -84,7 +82,7 @@ const AccountDetails = () => {
           throw new Error('Failed to get watched movies');
         }
         const data = await response.json();
-        console.log("Fetched Watched Movies Data:", data); // Debugging log
+        console.log("Fetched Watched Movies Data:", data);
         setWatchedMovieIds(data);
       } catch (error) {
         console.error('Error fetching watched movies:', error);
@@ -148,13 +146,13 @@ const AccountDetails = () => {
       </div>
 
       <div>
-        <h2>Your Watched Movies</h2> {/* New section for watched movies */}
+        <h2>Your Watched Movies</h2>
         {watchedMovies.length === 0 ? (
           <p>You haven't watched any movies yet.</p>
         ) : (
           <ul>
             {watchedMovies.map((movie) => (
-              <li key={movie.id}> {/* Use unique key */}
+              <li key={movie.id}>
                 <h3>{movie.title}</h3>
                 <img src={movie.image} alt={`Poster for ${movie.title}`} width="150" />
                 <p>{movie.summary}</p>
@@ -171,7 +169,7 @@ const AccountDetails = () => {
         ) : (
           <ul>
             {watchlist.map((movie) => (
-              <li key={movie.id}> {/* Use unique key */}
+              <li key={movie.id}>
                 <h3>{movie.title}</h3>
                 <img src={movie.image} alt={`Poster for ${movie.title}`} width="150" />
                 <p>{movie.summary}</p>
