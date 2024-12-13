@@ -2,7 +2,7 @@ import React, { useState, useEffect } from 'react';
 import { useWatchlist } from '../components/WatchlistContext';
 
 const AccountDetails = () => {
-  const { watchlist } = useWatchlist();
+  const { watchlist, removeFromWatchlist } = useWatchlist();
   const username = localStorage.getItem('username');
   const [comments, setComments] = useState([]);
   const [userId, setUserId] = useState(null);
@@ -92,6 +92,7 @@ const AccountDetails = () => {
                 <h3>{movie.title}</h3>
                 <img src={movie.image} alt={`Poster for ${movie.title}`} width="150" />
                 <p>{movie.summary}</p>
+                <button onClick={() => removeFromWatchlist(movie.id)}>Remove from Watchlist</button>
               </li>
             ))}
           </ul>
