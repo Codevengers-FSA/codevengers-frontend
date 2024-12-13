@@ -172,7 +172,8 @@ const AccountDetails = () => {
               {watchedMovies.map((movie) => (
                 <li key={movie.id}>
                   <h3>{movie.title}</h3>
-                  <img src={movie.image} alt={`Poster for ${movie.title}`} width="150" />
+                  {/* Ensure image URLs are correct here */}
+                  <img src={`https://codevengers-backend.onrender.com/${movie.image}`} alt={`Poster for ${movie.title}`} width="150" />
                   <button onClick={() => removeFromWatchedMovies(movie.id)}>Remove from Watched Movies</button>
                 </li>
               ))}
@@ -189,7 +190,7 @@ const AccountDetails = () => {
               {watchlist.map((movie) => (
                 <li key={movie.id}>
                   <h3>{movie.title}</h3>
-                  <img src={movie.image} alt={`Poster for ${movie.title}`} width="150" />
+                  <img src={`https://codevengers-backend.onrender.com/${movie.image}`} alt={`Poster for ${movie.title}`} width="150" />
                   <button onClick={() => removeFromWatchlist(movie.id)}>Remove from Watchlist</button>
                 </li>
               ))}

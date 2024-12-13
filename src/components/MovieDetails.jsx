@@ -12,10 +12,10 @@ const MovieDetails = () => {
   const [userRating, setUserRating] = useState(0);
   const [averageRating, setAverageRating] = useState(0);
   const [isInWatchlist, setIsInWatchlist] = useState(false);
-  const [isWatched, setIsWatched] = useState(false); // New state for watched status
+  const [isWatched, setIsWatched] = useState(false);
 
   const token = localStorage.getItem('token');
-  const username = localStorage.getItem('username'); // Assuming username is stored in local storage
+  const username = localStorage.getItem('username');
 
   const fetchRatingData = async () => {
     try {
@@ -32,8 +32,6 @@ const MovieDetails = () => {
 
       if (response.ok) {
         const data = await response.json();
-        console.log("Rating data:", data);
-
         if (data.average !== undefined && data.userRating !== undefined) {
           setAverageRating(data.average);
           setUserRating(data.userRating);
@@ -52,11 +50,9 @@ const MovieDetails = () => {
     const getSingleMovie = async () => {
       try {
         const response = await fetch(`https://codevengers-backend.onrender.com/movies/${id}`);
-
         if (!response.ok) {
           throw new Error(`HTTP error! status: ${response.status}`);
         }
-
         const data = await response.json();
         setSelectedMovie(data);
       } catch (error) {
@@ -74,7 +70,6 @@ const MovieDetails = () => {
   }, [id, token]);
 
   useEffect(() => {
-    // Check if the movie is already in the watchlist
     const movieInWatchlist = watchlist.some(movie => movie.id === selectedMovie?.id);
     setIsInWatchlist(movieInWatchlist);
   }, [watchlist, selectedMovie]);
@@ -118,16 +113,13 @@ const MovieDetails = () => {
 
   const handleAddToWatchlist = () => {
     addToWatchlist(selectedMovie);
-    setIsInWatchlist(true); // Set state to indicate the movie is in the watchlist
+    setIsInWatchlist(true);
   };
 
   const handleWatched = async () => {
     try {
-      const username = localStorage.getItem('username'); // Make sure this is correctly retrieved
-      const token = localStorage.getItem('token'); // Make sure this is correctly retrieved
-
-      console.log("Retrieved Username:", username); // Add this line to verify
-      console.log("Retrieved Token:", token); // This is already in place
+      const username = localStorage.getItem('username');
+      const token = localStorage.getItem('token');
 
       if (!username || !token) {
         console.error("Username or token is missing.");
@@ -147,7 +139,7 @@ const MovieDetails = () => {
       );
 
       if (response.ok) {
-        setIsWatched(true); // Set state to indicate the movie is watched
+        setIsWatched(true);
       } else {
         console.error("Failed to update watched status.");
       }
@@ -170,7 +162,6 @@ const MovieDetails = () => {
       );
 
       if (response.ok) {
-        console.log(`Comment with ID ${commentId} deleted.`);
         setSelectedMovie((prevMovie) => ({
           ...prevMovie,
           comments: prevMovie.comments.filter((comment) => comment.id !== commentId),
@@ -219,7 +210,7 @@ const MovieDetails = () => {
       {selectedMovie.image && (
         <img
           id="movie-poster"
-          src={selectedMovie.image}
+          src={`https://codevengers-backend.onrender.com${selectedMovie.image}`}
           alt={`Poster for ${selectedMovie.title}`}
           height="500"
           width="350"
