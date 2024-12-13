@@ -1,9 +1,16 @@
-import React, { createContext, useState, useContext } from 'react';
+import React, { createContext, useState, useContext, useEffect } from 'react';
 
 const WatchlistContext = createContext();
 
 export const WatchlistProvider = ({ children }) => {
-  const [watchlist, setWatchlist] = useState([]);
+  const [watchlist, setWatchlist] = useState(() => {
+    const savedWatchlist = localStorage.getItem('watchlist');
+    return savedWatchlist ? JSON.parse(savedWatchlist) : [];
+  });
+
+  useEffect(() => {
+    localStorage.setItem('watchlist', JSON.stringify(watchlist));
+  }, [watchlist]);
 
   const addToWatchlist = (movie) => {
     if (!watchlist.some((item) => item.id === movie.id)) {

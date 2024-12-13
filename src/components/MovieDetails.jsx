@@ -7,11 +7,12 @@ const MovieDetails = () => {
   const { id } = useParams();
   const [selectedMovie, setSelectedMovie] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
-  const { addToWatchlist } = useWatchlist();
+  const { addToWatchlist, watchlist } = useWatchlist();
   const [userRating, setUserRating] = useState(0);
   const [averageRating, setAverageRating] = useState(0);
+  const [isInWatchlist, setIsInWatchlist] = useState(false);
 
-  const token = localStorage.getItem('token')
+  const token = localStorage.getItem('token');
 
   useEffect(() => {
     const getSingleMovie = async () => {
@@ -34,37 +35,46 @@ const MovieDetails = () => {
     getSingleMovie();
   }, [id]);
 
-  const fetchRatingData = async () => {
-    try {
-      const token = localStorage.getItem("token");
-      if (!token) {
-        console.error("No token found. Please log in.");
-        return;
-      }
-
-      const response = await fetch(`https://codevengers-backend.onrender.com/ratings/movies/${id}/ratings`, {
-        headers: {
-          'Authorization': `Bearer ${token}`,
-        },
-      });
-
-      if (response.ok) {
-        const data = await response.json();
-        console.log("Rating data:", data);
-
-        if (data.average !== undefined && data.userRating !== undefined) {
-          setAverageRating(data.average);
-          setUserRating(data.userRating);
-        } else {
-          console.error("Invalid rating data format.");
+  useEffect(() => {
+    const fetchRatingData = async () => {
+      try {
+        if (!token) {
+          console.error("No token found. Please log in.");
+          return;
         }
-      } else {
-        console.error("Failed to fetch ratings.");
+
+        const response = await fetch(`https://codevengers-backend.onrender.com/ratings/movies/${id}/ratings`, {
+          headers: {
+            'Authorization': `Bearer ${token}`,
+          },
+        });
+
+        if (response.ok) {
+          const data = await response.json();
+          console.log("Rating data:", data);
+
+          if (data.average !== undefined && data.userRating !== undefined) {
+            setAverageRating(data.average);
+            setUserRating(data.userRating);
+          } else {
+            console.error("Invalid rating data format.");
+          }
+        } else {
+          console.error("Failed to fetch ratings.");
+        }
+      } catch (error) {
+        console.error("Error fetching rating data", error);
       }
-    } catch (error) {
-      console.error("Error fetching rating data", error);
-    }
-  };
+    };
+
+    fetchRatingData();
+  }, [id, token]);
+
+  useEffect(() => {
+    // Check if the movie is already in the watchlist
+    const movieInWatchlist = watchlist.some(movie => movie.id === selectedMovie?.id);
+    setIsInWatchlist(movieInWatchlist);
+  }, [watchlist, selectedMovie]);
 
   const handleRatingClick = async (rating) => {
     try {
@@ -92,12 +102,9 @@ const MovieDetails = () => {
     }
   };
 
-  useEffect(() => {
-    fetchRatingData();
-  }, [id]);
-
   const handleAddToWatchlist = () => {
     addToWatchlist(selectedMovie);
+    setIsInWatchlist(true); // Set state to indicate the movie is in the watchlist
   };
 
   const deleteComment = async (commentId) => {
@@ -112,7 +119,7 @@ const MovieDetails = () => {
           },
         }
       );
-  
+
       if (response.ok) {
         console.log(`Comment with ID ${commentId} deleted.`);
         setSelectedMovie((prevMovie) => ({
@@ -139,7 +146,7 @@ const MovieDetails = () => {
           },
         }
       );
-  
+
       if (response.ok) {
         console.log(`Reply with ID ${replyId} deleted.`);
       } else {
@@ -149,7 +156,7 @@ const MovieDetails = () => {
       console.error("Error deleting reply:", error);
     }
   };
-  
+
   if (isLoading) {
     return <p>Loading movie details...</p>;
   }
@@ -173,8 +180,11 @@ const MovieDetails = () => {
       <p id="movie-summary">{selectedMovie.summary}</p>
       <CommentsSection movieId={id} />
       
-      {token && ( 
-      <button onClick={handleAddToWatchlist}>Add to Watchlist</button> )}
+      {token && !isInWatchlist && ( 
+        <button onClick={handleAddToWatchlist}>Add to Watchlist</button>
+      )}
+
+      {isInWatchlist && <p>Added to Watchlist!</p>}
 
       <div>
         <h3>Rate This Movie</h3>
