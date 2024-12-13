@@ -1,6 +1,7 @@
 import React, { useEffect, useState } from "react";
 import Comment from "./Comments";
 
+
 const CommentsSection = ({ movieId }) => {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
@@ -188,7 +189,44 @@ const CommentsSection = ({ movieId }) => {
     }
   };
 
-  return (
+  const handleUpdateComment = async (id, newText) =>{
+    const userId = localStorage.getItem('userId')
+    if(!token) {
+      console.error('User not loged in');
+      return;
+    }
+
+    try {
+      const response = await fetch (`https://codevengers-backend.onrender.com/comments/comments/${id}`, 
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({ 
+            text: newText, 
+            id: id,
+            userid: userId,
+           }),
+        }
+      );
+      if(!response.ok){
+        throw new Error("Failed to update comment");
+      }
+      const updatedComment = await response.json();
+      setComments((prevComments)=>
+        prevComments.map((comment)=>
+        comment.id === id ? {comment, text: updatedComment.text} : comment
+        )
+      );
+    } catch (err) {
+      console.error("Error updating comment", err);
+    }}
+
+  
+
+    return (
     <div className="comments-section">
       {token && (
         <form onSubmit={handleAddComment}>
@@ -211,6 +249,7 @@ const CommentsSection = ({ movieId }) => {
             onDeleteComment={handleDeleteComment}
             onDeleteReply={handleDeleteReply}
             username={username}
+            onUpdateComment = {handleUpdateComment}
           />
         ))}
       </div>
