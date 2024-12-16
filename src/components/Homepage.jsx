@@ -35,7 +35,7 @@ const Home = () => {
 
   return (
     <div className="homepage-container">
-      <h1 >Welcome To Our Marvel Universe</h1>
+      <h1 >Codevengers: The Ultimate MCU Guide</h1>
       <h2 className="homepage-subtitle">Unleash your inner hero (or villain) with our Marvel AI Assistant!</h2>
       <p className="homepage-description">Do you have a question about the marvel universe? Just type anything
       - a name, a movie, a quote. Our Marvel AI assistant will find where it appears 
