@@ -84,6 +84,41 @@ const CommentsSection = ({ movieId }) => {
     }
   };
 
+  // Handle updating a comment
+  const handleUpdateComment = async (commentId, updatedText) => {
+    try {
+      const response = await fetch(
+        `https://codevengers-backend.onrender.com/comments/comments/${commentId}`,
+        {
+          method: "PUT",
+          headers: {
+            "Content-Type": "application/json",
+            Authorization: `Bearer ${token}`,
+          },
+          body: JSON.stringify({
+            text: updatedText,
+          }),
+        }
+      );
+  
+      if (!response.ok) {
+        throw new Error(`Error: ${response.status}`);
+      }
+  
+      const updatedComment = await response.json();
+      console.log("Comment updated:", updatedComment);
+  
+      // Update the local state or UI with the updated comment data
+      setComments((prevComments) =>
+        prevComments.map((comment) =>
+          comment.id === commentId ? { ...comment, text: updatedText } : comment
+        )
+      );
+    } catch (error) {
+      console.error("Error updating comment:", error);
+    }
+  };
+
   // Handle deleting a comment
   const handleDeleteComment = async (id) => {
     if (!token) {
@@ -207,11 +242,12 @@ const CommentsSection = ({ movieId }) => {
       <div className="comments-list">
         {comments.map((comment) => (
           <Comment
-            key={comment.id}
-            comment={comment}
-            onReply={handleReply}
-            onDeleteComment={handleDeleteComment}
-            onDeleteReply={handleDeleteReply}
+          key={comment.id}
+          comment={comment}
+          onReply={handleReply}
+          onDeleteComment={handleDeleteComment}
+          onDeleteReply={handleDeleteReply}
+          onUpdateComment={handleUpdateComment}
           />
         ))}
       </div>
