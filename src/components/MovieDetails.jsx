@@ -207,51 +207,58 @@ const MovieDetails = () => {
 
   return (
     <>
-      {selectedMovie.image && (
-        <img
-          id="movie-poster"
-          src={`https://codevengers-backend.onrender.com${selectedMovie.image}`}
-          alt={`Poster for ${selectedMovie.title}`}
-          height="500"
-          width="350"
-        />
-      )}
-      <h2 id="movie-title">{selectedMovie.title}</h2>
-      <p id="movie-summary">{selectedMovie.summary}</p>
-      <CommentsSection movieId={id} />
-      
-      {token && !isInWatchlist && ( 
-        <button onClick={handleAddToWatchlist}>Add to Watchlist</button>
-      )}
+    {selectedMovie.image && (
+      <img
+        id="movie-poster"
+        src={`https://codevengers-backend.onrender.com${selectedMovie.image}`}
+        alt={`Poster for ${selectedMovie.title}`}
+        height="500"
+        width="350"
+      />
+    )}
+    <h2 id="movie-title">{selectedMovie.title}</h2>
+    <p id="movie-summary">{selectedMovie.summary}</p>
+    <CommentsSection movieId={id} />
+    
+    <div className="button-container">
+    {token && !isInWatchlist && ( 
+      <button className="watchlist-button" 
+      onClick={handleAddToWatchlist}>Add to Watchlist</button>
+    )}
 
-      {isInWatchlist && <p>Added to Watchlist!</p>}
 
-      {token && !isWatched && (
-        <button onClick={handleWatched}>I've Watched This</button>
-      )}
+    {isInWatchlist && <p>Added to Watchlist!</p>}
 
-      {isWatched && <p>You've watched this movie!</p>}
 
-      <div className="rating-container">
-        <h3 className="rating-title">Rate This Movie</h3>
-        <div >
-          {[1, 2, 3, 4, 5].map((star) => (
-            <span
-              key={star}
-              style={{
-                cursor: "pointer",
-                color: userRating >= star ? "gold" : "gray",
-                fontSize: "24px",
-              }}
-              onClick={() => handleRatingClick(star)}
-            >
-              ★
-            </span>
-          ))}
-        </div>
-        <p className="average-rating">Current Average Rating: {averageRating.toFixed(1)}</p>
+    {token && !isWatched && (
+      <button className="watched-button" onClick={handleWatched}>I've Watched This</button>
+    )}
+    </div>
+
+
+    {isWatched && <p>You've watched this movie!</p>}
+
+
+    <div className="rating-container">
+      <h3 className="rating-title">Rate This Movie</h3>
+      <div >
+        {[1, 2, 3, 4, 5].map((star) => (
+          <span
+            key={star}
+            style={{
+              cursor: "pointer",
+              color: userRating >= star ? "gold" : "gray",
+              fontSize: "24px",
+            }}
+            onClick={() => handleRatingClick(star)}
+          >
+            ★
+          </span>
+        ))}
       </div>
-    </>
+      <p className="average-rating">Current Average Rating: {averageRating.toFixed(1)}</p>
+    </div>
+  </>
   );
 };
 
