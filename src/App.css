@@ -611,7 +611,7 @@ h1 {
   border-radius: 10px;
   box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
   margin: 20px auto;
-  max-width: 100%;
+  max-width: 92%;
 }
 
 /* title for the ratings on moviedetails.jsx */
@@ -652,13 +652,23 @@ h1 {
   color: #555;
   font-size: 1rem;
 }
-
+.movie-details-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 30px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  max-width: 90%;
+  margin: 30px auto;
+  text-align: center;
+}
 /* effects the image on movie details page */
 #movie-poster {
-  display: block; 
-  margin: 0 auto; 
-  text-align: center; 
-  max-width: 100%; 
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+  margin-bottom: 20px;
 }
 
 /* effects title on movie detailspage */
@@ -787,7 +797,7 @@ h1 {
   background-color: #f8f9fa;
   border-radius: 8px;
   box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
-  max-width: 800px;
+  max-width: 92%;
   margin: 0 auto;
 }
 

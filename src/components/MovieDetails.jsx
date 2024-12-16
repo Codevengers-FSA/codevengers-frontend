@@ -207,6 +207,7 @@ const MovieDetails = () => {
 
   return (
     <>
+    <div className="movie-details-container">
       {selectedMovie.image && (
         <img
           id="movie-poster"
@@ -218,6 +219,7 @@ const MovieDetails = () => {
       )}
       <h2 id="movie-title">{selectedMovie.title}</h2>
       <p id="movie-summary">{selectedMovie.summary}</p>
+      </div>
       <CommentsSection movieId={id} />
       
       <div className="button-container">
