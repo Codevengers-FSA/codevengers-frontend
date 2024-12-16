@@ -166,7 +166,6 @@ const AccountDetails = () => {
     <>
       <div className="user-profile-container">
         <h1>Hello {username}</h1>
-        <button className="logout-button" onClick={handleLogout}>Logout</button>
       </div>
 
       <div className="columns-container">
@@ -197,7 +196,6 @@ const AccountDetails = () => {
               {watchedMovies.map((movie) => (
                 <li key={movie.id}>
                   <h3>{movie.title}</h3>
-                  {/* Ensure image URLs are correct here */}
                   <img src={`https://codevengers-backend.onrender.com/${movie.image}`} alt={`Poster for ${movie.title}`} width="150" />
                   <button className="account-details-button" onClick={() => removeFromWatchedMovies(movie.id)}>Remove from Watched Movies</button>
                 </li>
