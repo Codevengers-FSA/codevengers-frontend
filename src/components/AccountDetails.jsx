@@ -1,6 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { useWatchlist } from '../components/WatchlistContext';
-import { useNavigate } from 'react-router-dom';
+import { Navigate, useNavigate } from 'react-router-dom';
+import Account from './Account';
 
 const AccountDetails = () => {
   const { watchlist, removeFromWatchlist } = useWatchlist();
@@ -10,7 +11,9 @@ const AccountDetails = () => {
   const [watchedMovies, setWatchedMovies] = useState([]);
   const [userId, setUserId] = useState(null);
   const [error, setError] = useState(null);
+  const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem('token'));
   const navigate = useNavigate();
+  const key = userId || 'guest';
 
   const parseJwt = (token) => {
     var base64Url = token.split('.')[1];
@@ -39,7 +42,7 @@ const AccountDetails = () => {
       }
     };
     fetchUserId();
-  }, [navigate]);  
+  }, [navigate, setUserId]);  
 
   useEffect(() => {
     if (!userId || !username) {
@@ -146,13 +149,18 @@ const AccountDetails = () => {
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
-    setUserId(null);
+    localStorage.removeItem('userId')
     setComments([]);
     setWatchedMovieIds([]);
     setWatchedMovies([]);
     setError(null);
-    navigate('/account');
+    setLoggedIn(false);
+ 
   };
+
+  if(!loggedIn){
+    return <Account/>
+  }
 
   return (
     <>
