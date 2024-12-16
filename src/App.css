@@ -9,7 +9,12 @@ body {
   background-size: cover;
   background-attachment: fixed;
 }
+/* affects all paragraph tags */
+p{
+  color: black;
+}
 
+/*  custom font for our webpage*/
 @font-face {
   font-family: 'Heroes Legend';
   src: url('/fonts/Heroes-Legend.ttf') format('truetype');
@@ -17,6 +22,7 @@ body {
   font-style: normal;
 }
 
+/* affects all h1's without a class */
 h1 {
   text-align: center;
   color: #FFD700;
@@ -28,10 +34,8 @@ h1 {
   text-shadow: 
     2px 2px 0 #000000,
     0 0 10px #FFD700;
-  -webkit-background-clip: text;
-  -webkit-text-fill-color: transparent;
 }
-
+/* uses grid to affect our all movies page */
 #all-movies {
   display: grid;
   grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
@@ -41,6 +45,7 @@ h1 {
   max-width: 1400px;
 }
 
+/* affects section tag inside all movies */
 #all-movies section {
   background-color: rgba(255, 255, 255, 0.9); /* Semi-transparent white cards */
   border: 2px solid #e63946; /* Red border */
@@ -51,17 +56,20 @@ h1 {
   transition: transform 0.3s, box-shadow 0.3s;
 }
 
+/* this add zoom in effect in all movies  */
 #all-movies section:hover {
   transform: scale(1.1);
   box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
 }
 
+/* adds a bluish border to the image in all movies */
 #all-movies img {
   max-width: 100%;
   border-radius: 12px;
   border: 2px solid #1d3557; /* Blue border for images */
 }
 
+/* affects the movie titles */
 #all-movies h3 {
   margin: 15px 0;
   font-size: 1.5rem;
@@ -69,6 +77,7 @@ h1 {
   color: #1d3557; /* Deep blue for titles */
 }
 
+/* affects any input tag with type text on the website*/
 input[type="text"] {
   width: 80%;
   max-width: 600px;
@@ -82,12 +91,14 @@ input[type="text"] {
   transition: all 0.3s;
 }
 
+/* gives red border on the inputs with type text */
 input[type="text"]:focus {
   outline: none;
   box-shadow: 0 0 10px #e63946, 0 0 15px #457b9d;
   border-color: #e63946; /* Red border on focus */
 }
 
+/* gives responsiveness to all movies page  */
 @media (max-width: 768px) {
   #all-movies {
     grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
@@ -103,6 +114,7 @@ input[type="text"]:focus {
 }
 
 /* Navigation Bar */
+/* gives space for the nav bar at the top */
 nav {
   padding: 10px;
   background-color: #f5f5f5;
@@ -110,6 +122,7 @@ nav {
   align-items: center;
 }
 
+/* styles each anchor tag in the navbar */
 nav a {
   text-decoration: none;
   color: #000;
@@ -120,10 +133,12 @@ nav a {
   transition: background-color 0.3s ease;
 }
 
+/* gives a gray background coler when you hover a tag */
 nav a:hover {
   background-color: #cccccc;
 }
 
+/* affects logout button in accountdetails.jsx */
 .logout-button {
   font-size: 24px; /* Further increased font size */
   padding: 15px 30px; /* Further increased padding */
@@ -137,12 +152,14 @@ nav a:hover {
   margin: 10px auto; /* Center the button and add margin */
 }
 
+/* hover effect on logout button */
 .logout-button:hover {
   background-color: #c82333;
   transform: translateY(-2px);
 }
 
 /* Container for Columns */
+/* affects container in accountdetails.jsx */
 .columns-container {
   display: flex;
   gap: 20px;
@@ -152,6 +169,7 @@ nav a:hover {
   align-items: flex-start; /* Ensure columns stretch with content */
 }
 
+/* styling for  each column in account details page*/
 .column {
   flex: 1;
   background-color: #ffffff;
@@ -175,6 +193,7 @@ nav a:hover {
   margin: 0;
 }
 
+/* gives border to each li in each column in accountdetails */
 .column li {
   background-color: #f9f9f9;
   padding: 15px;
@@ -185,41 +204,34 @@ nav a:hover {
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
+/* gives zoomed in hover effect to each li in each column in accountdetails */
 .column li:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   transform: translateY(-3px);
 }
 
+/* affects the image border radius giving rounded border radius in accountdetails */
 .column img {
   border-radius: 5px;
   box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
 }
 
-/* Movie Title Styling */
+/* Movie Title Styling in accountdetails */
 .column h3 {
   font-size: 1.25rem;
   color: #333;
   margin: 0;
 }
 
-.column p {
-  color: #555;
-  font-size: 1rem;
-  margin-top: 5px;
-}
-
-.column p.empty {
-  font-style: italic;
-  color: #999;
-}
-
 /* Container and Section Styling */
+/* watchlist page sets both columns next to eachother */
 .container {
   display: flex;
   gap: 20px;
   padding: 20px;
 }
 
+/*  */
 .list-section {
   flex: 1;
   padding: 20px;
@@ -674,4 +686,170 @@ h1 {
   margin: 0 auto; 
   text-align: center; 
   max-width: 100%; 
+}
+
+/* comment section */
+
+/* Container Styling */
+.comment-container {
+  margin-bottom: 20px;
+  padding: 15px;
+  background: #f9f9f9;
+  border-radius: 8px;
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1);
+}
+
+/* Text Styling */
+.comment-text,
+.reply-text {
+  font-size: 16px;
+  line-height: 1.5;
+  margin-bottom: 10px;
+}
+
+.comment-author,
+.reply-author {
+  font-weight: bold;
+  color: #333;
+}
+
+/* Input Styling */
+.edit-input,
+.reply-textarea {
+  width: 100%;
+  padding: 10px;
+  font-size: 14px;
+  margin: 10px 0;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+}
+
+/* Buttons Styling */
+.comment-actions button,
+.replies-container button {
+  margin-right: 10px;
+  padding: 8px 12px;
+  border: none;
+  border-radius: 5px;
+  font-size: 14px;
+  cursor: pointer;
+  transition: background 0.3s ease;
+}
+
+.btn-edit {
+  background: #007bff;
+  color: white;
+}
+
+.btn-edit:hover {
+  background: #0056b3;
+}
+
+.btn-reply {
+  background: #28a745;
+  color: white;
+}
+
+.btn-reply:hover {
+  background: #1e7e34;
+}
+
+.btn-delete {
+  background: #dc3545;
+  color: white;
+}
+
+.btn-delete:hover {
+  background: #a71d2a;
+}
+
+.btn-save {
+  background: #ffc107;
+  color: #333;
+}
+
+.btn-save:hover {
+  background: #e0a800;
+}
+
+.btn-submit-reply {
+  background: #17a2b8;
+  color: white;
+}
+
+.btn-submit-reply:hover {
+  background: #117a8b;
+}
+
+/* Replies Styling */
+.replies-container {
+  margin-left: 20px;
+  padding-left: 15px;
+  border-left: 2px solid #ddd;
+}
+
+.reply {
+  margin-bottom: 15px;
+}
+
+/* Comments Section Styling */
+.comments-section {
+  padding: 20px;
+  background-color: #f8f9fa;
+  border-radius: 8px;
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+  max-width: 800px;
+  margin: 0 auto;
+}
+
+/* Add Comment Form */
+.add-comment-form {
+  margin-bottom: 20px;
+  display: flex;
+  flex-direction: column;
+}
+
+.add-comment-textarea {
+  resize: none;
+  width: 100%;
+  height: 80px;
+  padding: 10px;
+  font-size: 14px;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  margin-bottom: 10px;
+}
+
+.btn-submit-comment {
+  align-self: flex-end;
+  background: #007bff;
+  color: white;
+  padding: 8px 16px;
+  font-size: 14px;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+}
+
+.btn-submit-comment:hover {
+  background: #0056b3;
+}
+
+/* Comments List */
+.comments-list {
+  margin-top: 20px;
+}
+
+/* Individual Comment Styling (for the Comment component) */
+.comment-container {
+  padding: 15px;
+  background: #ffffff;
+  border: 1px solid #e1e1e1;
+  border-radius: 8px;
+  margin-bottom: 15px;
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1);
+}
+
+.comment-container:hover {
+  background: #f1f1f1;
 }
