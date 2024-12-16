@@ -21,7 +21,7 @@ const NightModeToggle = ({onToggle}) => {
 
   return (
    <div>
-    <button onClick={toggleTheme}>
+<button id =  "nightmode" onClick={toggleTheme}>
         {isNightMode ? "Light" : "Dark"} 
         Mode</button>
    </div>
