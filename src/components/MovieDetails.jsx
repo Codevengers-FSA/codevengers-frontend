@@ -207,6 +207,7 @@ const MovieDetails = () => {
 
   return (
     <>
+    <div className="movie-details-container">
       {selectedMovie.image && (
         <img
           id="movie-poster"
@@ -218,19 +219,27 @@ const MovieDetails = () => {
       )}
       <h2 id="movie-title">{selectedMovie.title}</h2>
       <p id="movie-summary">{selectedMovie.summary}</p>
+      </div>
       <CommentsSection movieId={id} />
       
+      <div className="button-container">
       {token && !isInWatchlist && ( 
-        <button onClick={handleAddToWatchlist}>Add to Watchlist</button>
+        <button className="watchlist-button" 
+        onClick={handleAddToWatchlist}>Add to Watchlist</button>
       )}
+
 
       {isInWatchlist && <p>Added to Watchlist!</p>}
 
+
       {token && !isWatched && (
-        <button onClick={handleWatched}>I've Watched This</button>
+        <button className="watched-button" onClick={handleWatched}>I've Watched This</button>
       )}
+      </div>
+
 
       {isWatched && <p>You've watched this movie!</p>}
+
 
       <div className="rating-container">
         <h3 className="rating-title">Rate This Movie</h3>
