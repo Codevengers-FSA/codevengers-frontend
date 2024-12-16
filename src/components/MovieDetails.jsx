@@ -232,9 +232,9 @@ const MovieDetails = () => {
 
       {isWatched && <p>You've watched this movie!</p>}
 
-      <div>
-        <h3>Rate This Movie</h3>
-        <div>
+      <div className="rating-container">
+        <h3 className="rating-title">Rate This Movie</h3>
+        <div >
           {[1, 2, 3, 4, 5].map((star) => (
             <span
               key={star}
@@ -249,7 +249,7 @@ const MovieDetails = () => {
             </span>
           ))}
         </div>
-        <p>Current Average Rating: {averageRating.toFixed(1)}</p>
+        <p className="average-rating">Current Average Rating: {averageRating.toFixed(1)}</p>
       </div>
     </>
   );
