@@ -15,6 +15,10 @@ const Navbar = () => {
 
   return (
     <nav>
+      <Link to="/">
+        <img src="/images/logo.png" alt="Logo" className="nav-logo" />
+      </Link>
+
       <div className="nav-links">
         <Link to="/">Home</Link>
         <Link to="/moviecatalog">Movies</Link>
@@ -25,6 +29,6 @@ const Navbar = () => {
       {isLoggedIn && <button className="logout-button" onClick={handleLogout}>Logout</button>}
     </nav>
   );
-}
+};
 
 export default Navbar;

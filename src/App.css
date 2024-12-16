@@ -123,9 +123,10 @@ input[type="text"]:focus {
 nav {
   padding: 15px 30px;
   display: flex;
-  justify-content: space-between; /* This will keep the logout button on the right */
+  justify-content: space-between; /* Keeps logo on the left, and logout button on the right */
   align-items: center;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  position: relative;
 }
 
 /* Container for the links to center them */
@@ -133,18 +134,21 @@ nav {
   display: flex;
   justify-content: center;
   flex-grow: 1;
+  position: absolute; /* Centers the links relative to the nav */
+  left: 50%; /* Moves container to the middle horizontally */
+  transform: translateX(-50%); /* Centers the container by offsetting 50% of its width */
 }
 
 /* Links */
 nav a {
   text-decoration: none;
   color: #000000;
-  font-size: 30px;
-  padding: 10px 15px; /* Reduced the padding to decrease space */
+  font-size: 36px; /* Increased font size for larger links */
+  padding: 12px 18px; /* Slightly increased padding for better spacing */
   border-radius: 5px;
   font-family: 'Bangers', sans-serif;
   transition: background-color 0.3s ease, transform 0.2s ease;
-  margin: 0 8px; /* Keeps some space between the links */
+  margin: 0 12px; /* Increased margin to space out links */
   text-align: center;
 }
 
@@ -156,7 +160,7 @@ nav a:hover {
 
 /* Logout Button */
 .logout-button {
-  font-size: 1rem;
+  font-size: 1.2rem; /* Slightly larger button text to match bigger links */
   padding: 12px 24px;
   color: #fff;
   background-color: #e74c3c;
@@ -171,6 +175,13 @@ nav a:hover {
 .logout-button:hover {
   background-color: #c0392b;
   transform: translateY(-3px);
+}
+
+/* Logo Styling */
+.nav-logo {
+  height: 60px; /* Slightly larger height to balance with bigger links */
+  margin-right: 20px; /* Add some spacing between the logo and the links */
+  cursor: pointer;
 }
 
 /* Container for Columns */
