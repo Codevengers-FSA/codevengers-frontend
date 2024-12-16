@@ -124,24 +124,22 @@ const AccountDetails = () => {
   const removeFromWatchedMovies = async (movieId) => {
     try {
       const token = localStorage.getItem('token');
-      const response = await fetch(`https://codevengers-backend.onrender.com/users/${username}/watched/${movieId}`, 
-        {
-          method: 'DELETE',
-          headers: {
-            'Authorization' : `Bearer ${token}`,
-            'Contetnt-Type': `application/json`,
-          },
-        }
-      );
-      if (!response.ok){
-        throw new Error('Failed to remove movie from watched list');
+      const response = await fetch(`https://codevengers-backend.onrender.com/users/${username}/watched/${movieId}`, {
+        method: 'DELETE',
+        headers: {
+          'Authorization': `Bearer ${token}`,
+        },
+      });
+  
+      if (!response.ok) {
+        throw new Error('Failed to remove from watched movies');
       }
+  
       setWatchedMovieIds(prevIds => prevIds.filter(id => id !== movieId));
       setWatchedMovies(prevMovies => prevMovies.filter(movie => movie.id !== movieId));
-      console.log(`Movie with ${movieId} removed from watched list`);
     } catch (error) {
-      console.error('Error removing the movie from watched list:', error);
-      alert('Failed to remove the movie, please try later.')
+      console.error('Error removing from watched movies:', error);
+      setError('Unable to remove movie from watched list. Please try again later.');
     }
   };
 
