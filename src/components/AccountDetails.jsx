@@ -179,7 +179,7 @@ const AccountDetails = () => {
               {comments.map((comment) => (
                 <li key={comment.id}>
                   <p>{comment.text}</p>
-                  <button onClick={() => handleGoToComment(comment.movieId, comment.id)}>Go to Comment</button>
+                  <button className="account-details-button" onClick={() => handleGoToComment(comment.movieId, comment.id)}>Go to Comment</button>
                 </li>
               ))}
             </ul>
@@ -199,7 +199,7 @@ const AccountDetails = () => {
                   <h3>{movie.title}</h3>
                   {/* Ensure image URLs are correct here */}
                   <img src={`https://codevengers-backend.onrender.com/${movie.image}`} alt={`Poster for ${movie.title}`} width="150" />
-                  <button onClick={() => removeFromWatchedMovies(movie.id)}>Remove from Watched Movies</button>
+                  <button className="account-details-button" onClick={() => removeFromWatchedMovies(movie.id)}>Remove from Watched Movies</button>
                 </li>
               ))}
             </ul>
@@ -216,7 +216,7 @@ const AccountDetails = () => {
                 <li key={movie.id}>
                   <h3>{movie.title}</h3>
                   <img src={`https://codevengers-backend.onrender.com/${movie.image}`} alt={`Poster for ${movie.title}`} width="150" />
-                  <button onClick={() => removeFromWatchlist(movie.id)}>Remove from Watchlist</button>
+                  <button className="account-details-button" onClick={() => removeFromWatchlist(movie.id)}>Remove from Watchlist</button>
                 </li>
               ))}
             </ul>
