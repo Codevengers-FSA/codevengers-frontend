@@ -45,68 +45,84 @@ const Comment = ({ comment, onReply, onDeleteComment, onDeleteReply, username, o
   };
 
   return (
-    <div className="comment" id={`comment-${comment.id}`}>
-        <p>
-          <strong>{username || 'Anonymous'}</strong>:{" "}
-      { isEditing ? (
-        <input 
-        type='text'
+    <div className="comment-container" id={`comment-${comment.id}`}>
+  <p className="comment-text">
+    <strong className="comment-author">{username || "Anonymous"}</strong>:{" "}
+    {isEditing ? (
+      <input
+        className="edit-input"
+        type="text"
         value={editedText}
-        onChange={(e)=>setEditedText(e.target.value)}
-        />
-      ) : (
-        comment.text
-      )}
-        </p>
+        onChange={(e) => setEditedText(e.target.value)}
+      />
+    ) : (
+      comment.text
+    )}
+  </p>
 
-      {token && (
+  {token && (
+    <div className="comment-actions">
+      {isEditing ? (
+        <button className="btn-save" onClick={handleSaveClick}>
+          Save
+        </button>
+      ) : (
         <>
-        { isEditing ?(
-          <button onClick={handleSaveClick}>Save</button>
-        ) : (
-          <>
-          <button onClick={handleEditCLick}>Edit</button>
-          <button onClick={() => setShowReplyForm(!showReplyForm)}>
-            {showReplyForm ? 'Cancel' : 'Reply'}
+          <button className="btn-edit" onClick={handleEditCLick}>
+            Edit
+          </button>
+          <button
+            className="btn-reply"
+            onClick={() => setShowReplyForm(!showReplyForm)}
+          >
+            {showReplyForm ? "Cancel" : "Reply"}
           </button>
 
           {showReplyForm && (
-            <form onSubmit={handleReplySubmit}>
+            <form className="reply-form" onSubmit={handleReplySubmit}>
               <textarea
+                className="reply-textarea"
                 value={replyText}
                 onChange={(e) => setReplyText(e.target.value)}
                 placeholder="Write a reply..."
               ></textarea>
-              <button type="submit">Submit Reply</button>
+              <button className="btn-submit-reply" type="submit">
+                Submit Reply
+              </button>
             </form>
           )}
-        
-          <button onClick={handleDeleteComment}>Delete Comment</button>
-        </>
-        )}
-        </>
-)}
-        
-      
 
-      {comment.replies && comment.replies.length > 0 && (
-        <div className="replies">
-          {comment.replies.map((reply) => (
-            <div key={reply.id} className="reply" id={`reply-${reply.id}`}>
-              <p>
-                <strong>{reply.user?.username || 'Anonymous'}</strong>: {reply.text}
-              </p>
-
-              {token && (
-                <>
-                  <button onClick={() => handleDeleteReply(reply.id)}>Delete Reply</button>
-                </>
-              )}
-            </div>
-          ))}
-        </div>
+          <button className="btn-delete" onClick={handleDeleteComment}>
+            Delete Comment
+          </button>
+        </>
       )}
     </div>
+  )}
+
+  {comment.replies && comment.replies.length > 0 && (
+    <div className="replies-container">
+      {comment.replies.map((reply) => (
+        <div key={reply.id} className="reply" id={`reply-${reply.id}`}>
+          <p className="reply-text">
+            <strong className="reply-author">
+              {reply.user?.username || "Anonymous"}
+            </strong>
+            : {reply.text}
+          </p>
+          {token && (
+            <button
+              className="btn-delete-reply"
+              onClick={() => handleDeleteReply(reply.id)}
+            >
+              Delete Reply
+            </button>
+          )}
+        </div>
+      ))}
+    </div>
+  )}
+</div>
   );
 };
 

@@ -229,19 +229,20 @@ const CommentsSection = ({ movieId }) => {
   
 
     return (
-    <div className="comments-section">
+      <div className="comments-section">
       {token && (
-        <form onSubmit={handleAddComment}>
+        <form className="add-comment-form" onSubmit={handleAddComment}>
           <textarea
+            className="add-comment-textarea"
             value={newComment}
             onChange={(e) => setNewComment(e.target.value)}
             placeholder="Add a comment..."
             required
           />
-          <button type="submit">Submit Comment</button>
+          <button className="btn-submit-comment" type="submit">Submit Comment</button>
         </form>
       )}
-
+    
       <div className="comments-list">
         {comments.map((comment) => (
           <Comment
@@ -251,11 +252,12 @@ const CommentsSection = ({ movieId }) => {
             onDeleteComment={handleDeleteComment}
             onDeleteReply={handleDeleteReply}
             username={username}
-            onUpdateComment = {handleUpdateComment}
+            onUpdateComment={handleUpdateComment}
           />
         ))}
       </div>
     </div>
+    
   );
 };
 
