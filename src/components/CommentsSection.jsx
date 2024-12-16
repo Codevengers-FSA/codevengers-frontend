@@ -1,22 +1,10 @@
 import React, { useEffect, useState } from "react";
 import Comment from "./Comments";
 
-
 const CommentsSection = ({ movieId }) => {
   const [comments, setComments] = useState([]);
   const [newComment, setNewComment] = useState("");
-  const [username, setUsername] = useState("");
   const token = localStorage.getItem("token");
-  
- 
-  // Retrieve the username from local storage
-  useEffect(() => {
-    const storedUsername = localStorage.getItem("username");
-    if (storedUsername) {
-      setUsername(storedUsername);
-    }
-    console.log("Username retrieved from localStorage:", storedUsername);
-  }, []);
 
   // Fetch comments for the movie
   useEffect(() => {
@@ -49,8 +37,6 @@ const CommentsSection = ({ movieId }) => {
       return;
     }
 
-    console.log("Submitting comment with username:", username);
-
     try {
       const response = await fetch(
         `https://codevengers-backend.onrender.com/comments/movies/${movieId}/comments`,
@@ -60,7 +46,7 @@ const CommentsSection = ({ movieId }) => {
             "Content-Type": "application/json",
             Authorization: `Bearer ${token}`,
           },
-          body: JSON.stringify({ text: newComment, user: { username: username || "Anonymous" } }),
+          body: JSON.stringify({ text: newComment }),
         }
       );
 
@@ -69,7 +55,6 @@ const CommentsSection = ({ movieId }) => {
       }
 
       const addedComment = await response.json();
-      console.log("Added Comment:", addedComment);
       setComments((prevComments) => [...prevComments, addedComment]);
       setNewComment("");
     } catch (err) {
@@ -105,22 +90,12 @@ const CommentsSection = ({ movieId }) => {
     }
   };
 
-  // Handle adding a reply to a comment
   const handleReply = async (commentId, replyText) => {
-    const token = localStorage.getItem('token');
-  
     if (!token) {
       console.error("User not logged in");
       return;
     }
-  
-    if (!replyText || typeof replyText !== "string" || replyText.trim() === "") {
-      console.error("Invalid reply text");
-      return;
-    }
-  
-    console.log("Submitting reply with username:", username);
-  
+
     try {
       const response = await fetch(
         `https://codevengers-backend.onrender.com/comments/comments/${commentId}/replies`,
@@ -135,15 +110,12 @@ const CommentsSection = ({ movieId }) => {
           }),
         }
       );
-  
+
       if (!response.ok) {
-        const errorResponse = await response.json();
-        throw new Error(`Failed to add reply: ${errorResponse.message}`);
+        throw new Error("Failed to add reply");
       }
-  
+
       const newReply = await response.json();
-      console.log("Added Reply:", newReply);
-  
       setComments((prevComments) =>
         prevComments.map((comment) =>
           comment.id === commentId
@@ -154,9 +126,8 @@ const CommentsSection = ({ movieId }) => {
     } catch (err) {
       console.error("Error adding reply:", err);
     }
-  };  
+  };
 
-  // Handle deleting a reply
   const handleDeleteReply = async (replyId, parentId) => {
     if (!token) {
       console.error("User not logged in");
@@ -190,46 +161,8 @@ const CommentsSection = ({ movieId }) => {
     }
   };
 
-  const handleUpdateComment = async (id, newText) =>{
-   // const userId = localStorage.getItem('userId')
-    const token = localStorage.getItem('token');
-    if(!token) {
-      console.error('User not logged in');
-      return;
-    }
-
-    try {
-      const response = await fetch (`https://codevengers-backend.onrender.com/comments/comments/${id}`, 
-        {
-          method: "PUT",
-          headers: {
-            "Content-Type": "application/json",
-            Authorization: `Bearer ${token}`,
-          },
-          body: JSON.stringify({ 
-            text: newText, 
-            // id: id,
-            // userid: userId,
-           }),
-        }
-      );
-      if(!response.ok){
-        throw new Error("Failed to update comment");
-      }
-      const updatedComment = await response.json();
-      setComments((prevComments)=>
-        prevComments.map((comment)=>
-        comment.id === id ? updatedComment: comment
-        )
-      );
-    } catch (err) {
-      console.error("Error updating comment", err);
-    }}
-
-  
-
-    return (
-      <div className="comments-section">
+  return (
+    <div className="comments-section">
       {token && (
         <form className="add-comment-form" onSubmit={handleAddComment}>
           <textarea
@@ -239,10 +172,12 @@ const CommentsSection = ({ movieId }) => {
             placeholder="Add a comment..."
             required
           />
-          <button className="btn-submit-comment" type="submit">Submit Comment</button>
+          <button className="btn-submit-comment" type="submit">
+            Submit Comment
+          </button>
         </form>
       )}
-    
+
       <div className="comments-list">
         {comments.map((comment) => (
           <Comment
@@ -251,13 +186,10 @@ const CommentsSection = ({ movieId }) => {
             onReply={handleReply}
             onDeleteComment={handleDeleteComment}
             onDeleteReply={handleDeleteReply}
-            username={username}
-            onUpdateComment={handleUpdateComment}
           />
         ))}
       </div>
     </div>
-    
   );
 };
 
