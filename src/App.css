@@ -114,48 +114,57 @@ input[type="text"]:focus {
 }
 
 /* Navigation Bar */
-/* gives space for the nav bar at the top */
 nav {
-  padding: 10px;
-  background-color: #f5f5f5;
+  padding: 15px 30px;
   display: flex;
+  justify-content: space-between; /* This will keep the logout button on the right */
   align-items: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
 }
 
-/* styles each anchor tag in the navbar */
+/* Container for the links to center them */
+.nav-links {
+  display: flex;
+  justify-content: center;
+  flex-grow: 1;
+}
+
+/* Links */
 nav a {
   text-decoration: none;
-  color: #000;
-  font-size: 16px;
-  padding: 5px 10px;
+  color: #000000;
+  font-size: 30px;
+  padding: 10px 15px; /* Reduced the padding to decrease space */
   border-radius: 5px;
-  background-color: #e0e0e0;
-  transition: background-color 0.3s ease;
-}
-
-/* gives a gray background coler when you hover a tag */
-nav a:hover {
-  background-color: #cccccc;
-}
-
-/* affects logout button in accountdetails.jsx */
-.logout-button {
-  font-size: 24px; /* Further increased font size */
-  padding: 15px 30px; /* Further increased padding */
-  color: #fff;
-  background-color: #dc3545;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
+  font-family: 'Bangers', sans-serif;
   transition: background-color 0.3s ease, transform 0.2s ease;
-  display: block; /* Make the button a block element */
-  margin: 10px auto; /* Center the button and add margin */
+  margin: 0 8px; /* Keeps some space between the links */
+  text-align: center;
 }
 
-/* hover effect on logout button */
-.logout-button:hover {
-  background-color: #c82333;
+/* Hover Effect */
+nav a:hover {
+  background-color: #dba204;
   transform: translateY(-2px);
+}
+
+/* Logout Button */
+.logout-button {
+  font-size: 1rem;
+  padding: 12px 24px;
+  color: #fff;
+  background-color: #e74c3c;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  font-family: 'Arial', sans-serif;
+  margin-left: 20px;
+}
+
+/* Hover effect on logout button */
+.logout-button:hover {
+  background-color: #c0392b;
+  transform: translateY(-3px);
 }
 
 /* Container for Columns */
@@ -342,24 +351,6 @@ nav a:hover {
   transform: translateY(-2px);
 }
 
-/* Logout Button */
-.logout-button {
-  margin-top: 20px;
-  padding: 10px 15px;
-  font-size: 1rem;
-  color: #fff;
-  background-color: #dc3545;
-  border: none;
-  border-radius: 5px;
-  cursor: pointer;
-  transition: background-color 0.3s ease, transform 0.2s ease;
-}
-
-.logout-button:hover {
-  background-color: #c82333;
-  transform: translateY(-2px);
-}
-
 /* User Greeting */
 h1 {
   font-size: 2rem;
@@ -461,16 +452,11 @@ h1 {
   margin: 20px auto;
 }
 
-
-
-
 .homepage-title {
   font-size: 2.5rem;
   color: #e63946;
   text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
 }
-
-
 
 .homepage-subtitle {
   font-size: 1.5rem;
@@ -478,26 +464,17 @@ h1 {
   margin-bottom: 20px;
 }
 
-
-
-
 .homepage-description {
   font-size: 1rem;
   color: #333;
   margin-bottom: 20px;
 }
 
-
-
-
 .homepage-section-title {
   font-size: 1.8rem;
   color: #1d3557;
   margin-top: 30px;
 }
-
-
-
 
 .homepage-steps {
   list-style: decimal inside;
@@ -509,16 +486,11 @@ h1 {
   max-width: 500px;
 }
 
-
-
-
 .homepage-form {
   margin: 20px auto;
   max-width: 600px;
   text-align: left;
 }
-
-
 
 .form-label {
   display: block;
@@ -526,8 +498,6 @@ h1 {
   color: #333;
   font-weight: bold;
 }
-
-
 
 .form-input {
   width: 100%;
@@ -539,15 +509,11 @@ h1 {
   transition: border-color 0.3s;
 }
 
-
-
 .form-input:focus {
   border-color: #e63946;
   outline: none;
   box-shadow: 0 0 5px rgba(230, 57, 70, 0.5);
 }
-
-
 
 .form-button {
   width: 100%;
@@ -562,31 +528,21 @@ h1 {
   transition: background-color 0.3s, transform 0.2s;
 }
 
-
-
 .form-button:hover {
   background-color: #1d3557;
   transform: translateY(-2px);
 }
-
-
 
 .form-button:disabled {
   background-color: #a8dadc;
   cursor: not-allowed;
 }
 
-
-
-
 .error-message {
   color: #e63946;
   font-weight: bold;
   margin-top: 10px;
 }
-
-
-
 
 .recommendation-container {
   margin-top: 30px;
