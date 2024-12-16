@@ -1,5 +1,5 @@
-import React from "react";
-import { Link, useNavigate } from "react-router-dom";
+import {React, useState} from "react";
+import { Link, useNavigate} from "react-router-dom";
 import NightModeToggle from "./NightmodeToggle";
 
 const Navbar = () => {
@@ -32,7 +32,9 @@ const Navbar = () => {
         <Link to="/watchlists">Watchlists</Link>
         <Link to="/account">Account</Link>
       </div>
+      
       <NightModeToggle onToggle={handleToggleTheme} />
+      
       {isLoggedIn && <button className="logout-button" onClick={handleLogout}>Logout</button>}
     </nav>
   );
