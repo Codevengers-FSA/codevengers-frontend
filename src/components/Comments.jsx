@@ -1,7 +1,13 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
-const Comment = ({ comment, onReply, onDeleteComment, onDeleteReply, onUpdateComment }) => {
-  const [replyText, setReplyText] = useState('');
+const Comment = ({
+  comment,
+  onReply,
+  onDeleteComment,
+  onDeleteReply,
+  onUpdateComment,
+}) => {
+  const [replyText, setReplyText] = useState("");
   const [showReplyForm, setShowReplyForm] = useState(false);
   const [isEditing, setIsEditing] = useState(false);
   const [editedText, setEditedText] = useState(comment.text);

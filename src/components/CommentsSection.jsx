@@ -19,7 +19,29 @@ const CommentsSection = ({ movieId }) => {
         }
 
         const data = await response.json();
-        setComments(data);
+
+        // Map comments to ensure replies are nested under their parent
+        const commentsMap = new Map();
+
+        data.forEach((comment) => {
+          // Add the comment to the map by id (key)
+          commentsMap.set(comment.id, { ...comment, replies: [] });
+
+          // Add replies to their parent comment
+          if (comment.parentId) {
+            const parentComment = commentsMap.get(comment.parentId);
+            if (parentComment) {
+              parentComment.replies.push(comment);
+            }
+          }
+        });
+
+        // Extract the top-level comments (those without a parentId)
+        const topLevelComments = [...commentsMap.values()].filter(
+          (comment) => !comment.parentId
+        );
+
+        setComments(topLevelComments);
       } catch (err) {
         console.error("Error fetching comments:", err);
       }
@@ -90,6 +112,7 @@ const CommentsSection = ({ movieId }) => {
     }
   };
 
+  // Handle replying to a comment
   const handleReply = async (commentId, replyText) => {
     if (!token) {
       console.error("User not logged in");
@@ -116,6 +139,8 @@ const CommentsSection = ({ movieId }) => {
       }
 
       const newReply = await response.json();
+
+      // Update the comments state to nest the reply correctly
       setComments((prevComments) =>
         prevComments.map((comment) =>
           comment.id === commentId
@@ -128,6 +153,7 @@ const CommentsSection = ({ movieId }) => {
     }
   };
 
+  // Handle deleting a reply
   const handleDeleteReply = async (replyId, parentId) => {
     if (!token) {
       console.error("User not logged in");
