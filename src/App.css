@@ -14,6 +14,12 @@ p{
   color: black;
 }
 
+/* affects all h1's on out page */
+h1 {
+  font-size: 2rem;
+  color: #333; 
+  margin-bottom: 20px;
+}
 /*  custom font for our webpage*/
 @font-face {
   font-family: 'Heroes Legend';
@@ -224,14 +230,14 @@ nav a:hover {
 }
 
 /* Container and Section Styling */
-/* watchlist page sets both columns next to eachother */
+/* watchlists page sets both columns next to eachother */
 .container {
   display: flex;
   gap: 20px;
   padding: 20px;
 }
 
-/*  */
+/* adds background to the watchlists page  */
 .list-section {
   flex: 1;
   padding: 20px;
@@ -240,20 +246,22 @@ nav a:hover {
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
 }
 
-/* Title Styling */
+/* Title Styling in watchlists page */
+
 .list-title {
   margin-bottom: 15px;
   color: #333;
   font-family: Arial, sans-serif;
 }
 
-/* Movie List Styling */
+/* Movie List Styling in watchlists page*/
 .movie-list {
   list-style: none;
   padding: 0;
   margin: 0;
 }
 
+/* adds border and margins for the lists in watchlists page */
 .movie-item {
   padding: 15px;
   border: 1px solid #ddd;
@@ -263,18 +271,19 @@ nav a:hover {
   transition: transform 0.2s, box-shadow 0.2s;
 }
 
+/* adds hover effect to each list item in watchlists page */
 .movie-item:hover {
   box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
   transform: translateY(-3px);
 }
 
-/* Movie Title Styling */
+/* Movie Title Styling blue color in watchlists page*/
 .movie-title {
   color: #007BFF;
   font-weight: bold;
 }
 
-/* General Container */
+/* General Container in account.jsx before logging in*/
 .auth-container {
   display: flex;
   flex-direction: column;
@@ -284,7 +293,7 @@ nav a:hover {
   padding: 20px;
 }
 
-/* Auth Forms */
+/* Auth Forms in account */
 .auth-forms {
   display: flex;
   flex-direction: column;
@@ -297,7 +306,7 @@ nav a:hover {
   padding: 20px;
 }
 
-/* Form Titles */
+/* Form Titles makes titles smaller in login page*/
 .form-title {
   font-size: 1.5rem;
   font-weight: bold;
@@ -306,7 +315,7 @@ nav a:hover {
   margin-bottom: 20px;
 }
 
-/* Inputs */
+/* Inputs - styles inputs in account.jsx */
 .auth-input {
   width: 90%;
   padding: 10px 15px;
@@ -317,13 +326,14 @@ nav a:hover {
   transition: border-color 0.3s ease;
 }
 
+/* gives blue border when clicking on an input in accounts page */
 .auth-input:focus {
   border-color: #007BFF;
   outline: none;
   box-shadow: 0 0 5px rgba(0, 123, 255, 0.3);
 }
 
-/* Buttons */
+/* Buttons in account.jsx page */
 .auth-button {
   width: 100%;
   padding: 10px 15px;
@@ -337,12 +347,13 @@ nav a:hover {
   transition: background-color 0.3s ease, transform 0.2s ease;
 }
 
+/* gives hover effect on buttons in account.jsx page */
 .auth-button:hover {
   background-color: #0056b3;
   transform: translateY(-2px);
 }
 
-/* Logout Button */
+/* Logout Button - logout button in accountdetails.jsx page*/
 .logout-button {
   margin-top: 20px;
   padding: 10px 15px;
@@ -360,97 +371,14 @@ nav a:hover {
   transform: translateY(-2px);
 }
 
-/* User Greeting */
+/* User Greeting - affects all h1's on our page*/
 h1 {
   font-size: 2rem;
   color: #333; 
   margin-bottom: 20px;
 }
 
-/* User Comments Section */
-.user-comments {
-  width: 100%;
-  max-width: 800px;
-  background: #ffffff;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  padding: 20px;
-}
-
-.user-comments h1 {
-  font-size: 1.5rem;
-  color: #333;
-  margin-bottom: 15px;
-}
-
-.user-comments ul {
-  list-style-type: none;
-  padding-left: 0;
-}
-
-.user-comments li {
-  background-color: #f9f9f9;
-  padding: 10px;
-  margin-bottom: 10px;
-  border-radius: 5px;
-}
-
-.user-comments p {
-  color: #555;
-}
-
-/* Watchlist Section */
-.watchlist {
-  width: 100%;
-  max-width: 800px;
-  background: #ffffff;
-  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
-  border-radius: 10px;
-  padding: 20px;
-}
-
-.watchlist h2 {
-  font-size: 1.5rem;
-  color: #333;
-  margin-bottom: 15px;
-}
-
-.watchlist ul {
-  list-style-type: none;
-  padding-left: 0;
-}
-
-.watchlist li {
-  background-color: #f9f9f9;
-  padding: 15px;
-  margin-bottom: 15px;
-  border-radius: 5px;
-  gap: 15px;
-  align-items: center;
-}
-
-.watchlist img {
-  border-radius: 5px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-}
-
-.watchlist h3 {
-  font-size: 1.25rem;
-  color: #333;
-  margin: 0;
-}
-
-.watchlist p {
-  color: #777;
-  font-size: 1rem;
-  margin-top: 5px;
-}
-
-.watchlist p.empty {
-  font-style: italic;
-  color: #999;
-}
-
+/* outside div on homepage */
 .homepage-container {
   padding: 30px;
   background: #f5f5f5;
@@ -461,44 +389,21 @@ h1 {
   margin: 20px auto;
 }
 
-
-
-
-.homepage-title {
-  font-size: 2.5rem;
-  color: #e63946;
-  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.3);
-}
-
-
-
+/* color for the homepage title */
 .homepage-subtitle {
   font-size: 1.5rem;
   color: #457b9d;
   margin-bottom: 20px;
 }
 
-
-
-
-.homepage-description {
-  font-size: 1rem;
-  color: #333;
-  margin-bottom: 20px;
-}
-
-
-
-
+/* color for how it works? on homepage */
 .homepage-section-title {
   font-size: 1.8rem;
   color: #1d3557;
   margin-top: 30px;
 }
 
-
-
-
+/* li in homepage */
 .homepage-steps {
   list-style: decimal inside;
   padding: 0;
@@ -509,17 +414,14 @@ h1 {
   max-width: 500px;
 }
 
-
-
-
+/* form on homepage */
 .homepage-form {
   margin: 20px auto;
   max-width: 600px;
   text-align: left;
 }
 
-
-
+/* style for the form */
 .form-label {
   display: block;
   margin-bottom: 10px;
@@ -548,7 +450,7 @@ h1 {
 }
 
 
-
+/* form button styling */
 .form-button {
   width: 100%;
   padding: 10px 15px;
@@ -563,12 +465,11 @@ h1 {
 }
 
 
-
+/* hover effect for the form button in homepage */
 .form-button:hover {
   background-color: #1d3557;
   transform: translateY(-2px);
 }
-
 
 
 .form-button:disabled {
@@ -576,18 +477,13 @@ h1 {
   cursor: not-allowed;
 }
 
-
-
-
 .error-message {
   color: #e63946;
   font-weight: bold;
   margin-top: 10px;
 }
 
-
-
-
+/* container for recommended movies on homepage */
 .recommendation-container {
   margin-top: 30px;
   padding: 20px;
@@ -598,22 +494,21 @@ h1 {
 }
 
 
-
+/* title styling for recommended movies */
 .recommendation-title {
   font-size: 1.5rem;
   color: #333;
   margin-bottom: 10px;
 }
 
-
-
+/* makes it a list on homepage */
 .recommendation-list {
   list-style: none;
   padding: 0;
 }
 
 
-
+/* styling for each list in recommended movies homepage */
 .recommendation-item {
   padding: 10px;
   background: #f9f9f9;
@@ -623,6 +518,7 @@ h1 {
   box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
 }
 
+/* container for stars in the moviedetails.jsx */
 .rating-container {
   text-align: center;
   padding: 20px;
@@ -633,18 +529,21 @@ h1 {
   max-width: 100%;
 }
 
+/* title for the ratings on moviedetails.jsx */
 .rating-title {
   font-size: 1.5rem;
   color: #333;
   margin-bottom: 15px;
 }
 
+/* the stars container */
 .stars-container {
   display: flex;
   justify-content: center;
   gap: 5px;
 }
 
+/* each star  */
 .star {
   cursor: pointer;
   font-size: 24px;
@@ -652,21 +551,24 @@ h1 {
   transition: transform 0.2s ease, color 0.2s ease;
 }
 
+/* hover effect on each star */
 .star:hover {
   transform: scale(1.2);
   color: gold;
 }
 
+/* star changes colors when selected  */
 .star.selected {
   color: gold;
 }
-
+/* p element for averagerating class */
 .average-rating {
   margin-top: 10px;
   color: #555;
   font-size: 1rem;
 }
 
+/* effects the image on movie details page */
 #movie-poster {
   display: block; 
   margin: 0 auto; 
@@ -674,6 +576,7 @@ h1 {
   max-width: 100%; 
 }
 
+/* effects title on movie detailspage */
 #movie-title {
   display: block; 
   margin: 0 auto; 
@@ -681,6 +584,7 @@ h1 {
   max-width: 100%; 
 }
 
+/* effects summary on movie details page */
 #movie-summary {
   display: block; 
   margin: 0 auto; 
