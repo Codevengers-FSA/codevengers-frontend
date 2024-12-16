@@ -123,9 +123,10 @@ input[type="text"]:focus {
 nav {
   padding: 15px 30px;
   display: flex;
-  justify-content: space-between; /* This will keep the logout button on the right */
+  justify-content: space-between;
   align-items: center;
   box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+  position: relative;
 }
 
 /* Container for the links to center them */
@@ -133,30 +134,33 @@ nav {
   display: flex;
   justify-content: center;
   flex-grow: 1;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
 }
 
 /* Links */
 nav a {
   text-decoration: none;
   color: #000000;
-  font-size: 30px;
-  padding: 10px 15px; /* Reduced the padding to decrease space */
+  font-size: 36px;
+  padding: 12px 18px;
   border-radius: 5px;
   font-family: 'Bangers', sans-serif;
   transition: background-color 0.3s ease, transform 0.2s ease;
-  margin: 0 8px; /* Keeps some space between the links */
+  margin: 0 12px;
   text-align: center;
 }
 
-/* Hover Effect */
-nav a:hover {
+/* Hover Effect for Links */
+.nav-links a:hover {
   background-color: #dba204;
   transform: translateY(-2px);
 }
 
 /* Logout Button */
 .logout-button {
-  font-size: 1rem;
+  font-size: 1.2rem;
   padding: 12px 24px;
   color: #fff;
   background-color: #e74c3c;
@@ -171,6 +175,20 @@ nav a:hover {
 .logout-button:hover {
   background-color: #c0392b;
   transform: translateY(-3px);
+}
+
+/* Logo Styling */
+.nav-logo {
+  height: 60px;
+  margin-right: 20px;
+  cursor: pointer;
+  transition: none;
+}
+
+/* Ensure no hover effect on logo */
+.nav-logo:hover {
+  background-color: transparent;
+  transform: none;
 }
 
 /* Container for Columns */
