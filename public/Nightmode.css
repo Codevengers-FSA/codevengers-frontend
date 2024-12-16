@@ -1,0 +1,140 @@
+
+    body {
+    font-family: 'Arial', sans-serif;
+    margin: 0;
+    padding: 0;
+    color: #cbd5e0; /* Soft light gray for text */
+    background: 
+      linear-gradient(to bottom, #1a1a2e, #162447), /* Dark blue gradient */
+      radial-gradient(circle at center, #0f0f1d 25%, #1f4068 50%, #1a1a2e 75%); /* Dark gray and blue gradients */
+    background-size: cover;
+    background-attachment: fixed;
+  }
+  
+  p {
+    color: #088990; /* Light blue for paragraph text */
+  }
+
+  h1 {
+    text-align: center;
+    color: #007bff; /* Bright blue for titles */
+    margin-top: 20px;
+    font-size: 45px;
+    font-family: 'Heroes Legend', sans-serif;
+    text-transform: uppercase;
+    letter-spacing: 5px;
+    text-shadow: 
+      2px 2px 0 #000000,
+      0 0 10px #007bff;
+  }
+  
+  #all-movies {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+    gap: 20px;
+    padding: 30px;
+    margin: 0 auto;
+    max-width: 1400px;
+  }
+  
+  #all-movies section {
+    background-color: rgba(34, 40, 49, 0.9); /* Semi-transparent dark gray */
+    border: 2px solid #007bff; /* Bright blue border */
+    border-radius: 12px;
+    text-align: center;
+    padding: 20px;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  
+  #all-movies section:hover {
+    transform: scale(1.1);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.7);
+  }
+  
+  #all-movies img {
+    max-width: 100%;
+    border-radius: 12px;
+    border: 2px solid #1d3557; /* Deep blue border */
+  }
+  
+  #all-movies h3 {
+    margin: 15px 0;
+    font-size: 1.5rem;
+    font-weight: bold;
+    color: #abdfe0; /* Light blue for movie titles */
+  }
+  
+  input[type="text"] {
+    width: 80%;
+    max-width: 600px;
+    padding: 15px;
+    margin: 20px auto;
+    display: block;
+    border: 2px solid #007bff; /* Bright blue border */
+    border-radius: 8px;
+    font-size: 1.2rem;
+    background-color: #1a1a2e; /* Dark background */
+    color: #cbd5e0; /* Light gray text */
+    box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.5);
+    transition: all 0.3s;
+  }
+  
+  input[type="text"]:focus {
+    outline: none;
+    box-shadow: 0 0 10px #007bff, 0 0 15px #1f4068;
+    border-color: #007bff;
+  }
+  
+  /* Navigation Bar */
+  nav {
+    padding: 10px;
+    background-color: #162447;
+    display: flex;
+    align-items: center;
+  }
+  
+  nav a {
+    text-decoration: none;
+    color: #cbd5e0;
+    font-size: 16px;
+    padding: 5px 10px;
+    border-radius: 5px;
+    background-color: #1a1a2e;
+    transition: background-color 0.3s ease;
+  }
+  
+  nav a:hover {
+    background-color: #1f4068;
+  }
+  
+  /* Buttons */
+  .auth-button, .logout-button {
+    background-color: #1f4068;
+    color: #fff;
+    transition: background-color 0.3s, transform 0.2s;
+  }
+  
+  .auth-button:hover, .logout-button:hover {
+    background-color: #007bff;
+    transform: translateY(-2px);
+  }
+  
+  /* Columns and Containers */
+  .column, .list-section, .watchlist, .comment-container{
+    background-color: #203056;
+    color: #cbd5e0;
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.7);
+  }
+  .column h2 {
+    color: #0fbaee;
+  }
+
+  .list-title {
+    color: #0fbaee;
+  }
+  .comment-author,
+.reply-author {
+  font-weight: bold;
+  color:#007bff;
+}
