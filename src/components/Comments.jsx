@@ -12,6 +12,10 @@ const Comment = ({
   const [isEditing, setIsEditing] = useState(false);
   const [editedText, setEditedText] = useState(comment.text);
 
+  // Get the logged-in user's ID (adjust based on where you store it)
+  const loggedInUserId = JSON.parse(localStorage.getItem("userId"));
+
+  // Handle editing comment
   const handleEditClick = () => {
     setIsEditing(true);
   };
@@ -23,6 +27,11 @@ const Comment = ({
     }
     onUpdateComment(comment.id, editedText.trim());
     setIsEditing(false);
+  };
+
+  const handleCancelEdit = () => {
+    setIsEditing(false);
+    setEditedText(comment.text); // Reset to original text
   };
 
   const handleReplySubmit = (e) => {
@@ -47,7 +56,9 @@ const Comment = ({
   return (
     <div className="comment-container" id={`comment-${comment.id}`}>
       <p className="comment-text">
-        <strong className="comment-author">{comment.user?.username || "Anonymous"}</strong>:{" "}
+        <strong className="comment-author">
+          {comment.user?.username || "Anonymous"}
+        </strong>:{" "}
         {isEditing ? (
           <input
             className="edit-input"
@@ -62,14 +73,28 @@ const Comment = ({
 
       <div className="comment-actions">
         {isEditing ? (
-          <button className="btn-save" onClick={handleSaveClick}>
-            Save
-          </button>
+          <>
+            <button className="btn-save" onClick={handleSaveClick}>
+              Save
+            </button>
+            <button className="btn-cancel" onClick={handleCancelEdit}>
+              Cancel
+            </button>
+          </>
         ) : (
           <>
-            <button className="btn-edit" onClick={handleEditClick}>
-              Edit
-            </button>
+            {/* Show buttons only if the user is the owner */}
+            {comment.user?.id === loggedInUserId && (
+              <>
+                <button className="btn-edit" onClick={handleEditClick}>
+                  Edit
+                </button>
+                <button className="btn-delete" onClick={handleDeleteComment}>
+                  Delete Comment
+                </button>
+              </>
+            )}
+
             <button
               className="btn-reply"
               onClick={() => setShowReplyForm(!showReplyForm)}
@@ -90,10 +115,6 @@ const Comment = ({
                 </button>
               </form>
             )}
-
-            <button className="btn-delete" onClick={handleDeleteComment}>
-              Delete Comment
-            </button>
           </>
         )}
       </div>
@@ -108,12 +129,14 @@ const Comment = ({
                 </strong>
                 : {reply.text}
               </p>
-              <button
-                className="btn-delete-reply"
-                onClick={() => handleDeleteReply(reply.id)}
-              >
-                Delete Reply
-              </button>
+              {reply.user?.id === loggedInUserId && (
+                <button
+                  className="btn-delete-reply"
+                  onClick={() => handleDeleteReply(reply.id)}
+                >
+                  Delete Reply
+                </button>
+              )}
             </div>
           ))}
         </div>
