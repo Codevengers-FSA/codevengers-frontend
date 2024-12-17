@@ -229,14 +229,14 @@ const MovieDetails = () => {
           </button>
         )}
 
-        {token && isInWatchlist && <p>Added to Watchlist!</p>} {/* Only show if logged in and movie is in watchlist */}
+        {token && isInWatchlist && <p className="center-message">Added to Watchlist!</p>} 
 
         {token && !isWatched && (
           <button className="watched-button" onClick={handleWatched}>I've Watched This</button>
         )}
       </div>
 
-      {isWatched && <p>You've watched this movie!</p>}
+      {isWatched && <p className="center-message">You've watched this movie!</p>}
 
 
       <div className="rating-container">

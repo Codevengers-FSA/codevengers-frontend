@@ -852,3 +852,10 @@ h1 {
 .comment-container:hover {
   background: #f1f1f1;
 }
+
+.center-message {
+  text-align: center;
+  font-size: 1.2rem;
+  font-weight: bold;
+  margin-top: 20px;
+}
