@@ -1,0 +1,796 @@
+body {
+  font-family: 'Arial', sans-serif;
+  margin: 0;
+  padding: 0;
+  color: #f1faee;
+  background: 
+    linear-gradient(to bottom, #1d3557, #457b9d), /* Soft blue gradient */
+    radial-gradient(circle at center, #000000 25%, #1d3557 50%, #457b9d 75%); /* Radial gradient with black and blue */
+  background-size: cover;
+  background-attachment: fixed;
+}
+
+p {
+  color: #1c1a31; /* Light gray for paragraphs */
+}
+
+h1 {
+  font-size: 2rem;
+  color: #f1faee; /* Light color for headings */
+  margin-bottom: 20px;
+  text-align: center;
+}
+
+h1 {
+  color: #a8dadc; /* Light cyan for headings */
+  margin-top: 20px;
+  font-size: 45px;
+  font-family: 'Heroes Legend', sans-serif;
+  text-transform: uppercase;
+  letter-spacing: 5px;
+  text-shadow: 
+    2px 2px 0 #000000,
+    0 0 10px #a8dadc;
+}
+
+#all-movies {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(250px, 1fr));
+  gap: 20px;
+  padding: 30px;
+  margin: 0 auto;
+  max-width: 1400px;
+}
+
+#all-movies section {
+  background-color: rgba(255, 255, 255, 0.1); /* Slightly transparent white */
+  border: 2px solid #457b9d; /* Blue border */
+  border-radius: 12px;
+  text-align: center;
+  padding: 20px;
+  box-shadow: 0 6px 12px rgba(0, 0, 0, 0.5);
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+
+#all-movies section:hover {
+  transform: scale(1.1);
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.7);
+}
+
+#all-movies img {
+  max-width: 100%;
+  border-radius: 12px;
+  border: 2px solid #1d3557;
+}
+
+#all-movies h3 {
+  margin: 15px 0;
+  font-size: 1.5rem;
+  font-weight: bold;
+  color: #a8dadc; /* Light cyan for titles */
+}
+
+input[type="text"] {
+  width: 80%;
+  max-width: 600px;
+  padding: 15px;
+  margin: 20px auto;
+  display: block;
+  border: 2px solid #1d3557;
+  border-radius: 8px;
+  font-size: 1.2rem;
+  box-shadow: inset 0 2px 4px rgba(0, 0, 0, 0.1);
+  transition: all 0.3s;
+}
+
+input[type="text"]:focus {
+  outline: none;
+  box-shadow: 0 0 10px #a8dadc, 0 0 15px #1d3557;
+  border-color: #a8dadc;
+}
+
+@media (max-width: 768px) {
+  #all-movies {
+    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  }
+
+  input[type="text"] {
+    width: 90%;
+  }
+
+  h1 {
+    font-size: 2rem;
+  }
+}
+
+nav {
+  padding: 15px 30px;
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+  position: relative;
+}
+
+.nav-links {
+  display: flex;
+  justify-content: center;
+  flex-grow: 1;
+  position: absolute;
+  left: 50%;
+  transform: translateX(-50%);
+}
+
+nav a {
+  text-decoration: none;
+  color: #ececec;
+  font-size: 36px;
+  padding: 12px 18px;
+  border-radius: 5px;
+  font-family: 'Bangers', sans-serif;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+  margin: 0 12px;
+  text-align: center;
+}
+
+.nav-links a:hover {
+  background-color: #a8dadc;
+  transform: translateY(-2px);
+}
+
+.logout-button {
+  font-size: 1.2rem;
+  padding: 12px 24px;
+  color: #fff;
+  background-color: #e74c3c;
+  border: none;
+  border-radius: 50px;
+  cursor: pointer;
+  font-family: 'Arial', sans-serif;
+  margin-left: 20px;
+}
+
+.logout-button:hover {
+  background-color: #c0392b;
+  transform: translateY(-3px);
+}
+
+.nav-logo {
+  height: 60px;
+  margin-right: 20px;
+  cursor: pointer;
+}
+
+.nav-logo:hover {
+  background-color: transparent;
+  transform: none;
+}
+
+.columns-container {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+  margin: 0 auto;
+  max-width: 1200px;
+  align-items: flex-start;
+}
+
+.column {
+  flex: 1;
+  background-color: #ffffff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.3);
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.column h2 {
+  margin-bottom: 15px;
+  color: #ececec;
+  font-family: Arial, sans-serif;
+  font-size: 1.5rem;
+}
+
+.column ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.account-details-button {
+  background-color: #1d3557;
+  color: white;
+  border: none;
+  border-radius: 5px;
+  padding: 10px 20px;
+  font-size: 16px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.account-details-button:hover {
+  background-color: #457b9d;
+  transform: scale(1.05);
+}
+
+.column li {
+  background-color: #f9f9f9;
+  padding: 15px;
+  margin-bottom: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.column li:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transform: translateY(-3px);
+}
+
+.column img {
+  border-radius: 5px;
+  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+}
+
+.column h3 {
+  font-size: 1.25rem;
+  color: #1d3557;
+  margin: 0;
+}
+
+.container {
+  display: flex;
+  gap: 20px;
+  padding: 20px;
+}
+
+.list-section {
+  flex: 1;
+  padding: 20px;
+  background-color: #f9f9f9;
+  border-radius: 10px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.list-title {
+  margin-bottom: 15px;
+  color: #1d3557;
+  font-family: Arial, sans-serif;
+}
+
+.movie-list {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.movie-item {
+  padding: 15px;
+  border: 1px solid #ddd;
+  border-radius: 8px;
+  margin-bottom: 10px;
+  cursor: pointer;
+  transition: transform 0.2s, box-shadow 0.2s;
+}
+
+.movie-item:hover {
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+  transform: translateY(-3px);
+}
+
+.movie-title {
+  color: #1d3557;
+  font-weight: bold;
+}
+
+.auth-container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  min-height: 100vh;
+  padding: 20px;
+}
+
+.auth-forms {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  width: 100%;
+  max-width: 400px;
+  background: #ffffff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1);
+  border-radius: 10px;
+  padding: 20px;
+}
+
+.form-title {
+  font-size: 1.5rem;
+  font-weight: bold;
+  text-align: center;
+  color: #333;
+  margin-bottom: 20px;
+}
+
+.auth-input {
+  width: 90%;
+  padding: 10px 15px;
+  margin-bottom: 15px;
+  font-size: 1rem;
+  border: 1px solid #ccc;
+  border-radius: 5px;
+  transition: border-color 0.3s ease;
+}
+
+.auth-input:focus {
+  border-color: #1d3557;
+  outline: none;
+  box-shadow: 0 0 5px rgba(29, 53, 87, 0.3);
+}
+
+.auth-button {
+  width: 100%;
+  padding: 10px 15px;
+  font-size: 1rem;
+  font-weight: bold;
+  color: #fff;
+  background-color: #1d3557;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.auth-button:hover {
+  background-color: #457b9d;
+  transform: translateY(-2px);
+}
+
+.logout-button {
+  margin-top: 20px;
+  padding: 10px 15px;
+  font-size: 1rem;
+  color: #fff;
+  background-color: #dc3545;
+  border: none;
+  border-radius: 5px;
+  cursor: pointer;
+  transition: background-color 0.3s ease, transform 0.2s ease;
+}
+
+.logout-button:hover {
+  background-color: #c82333;
+  transform: translateY(-2px);
+}
+
+.homepage-container {
+  padding: 30px;
+  background: #2a2a2a;
+  border-radius: 10px;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
+  text-align: center;
+  max-width: 800px;
+  margin: 20px auto;
+}
+
+.homepage-subtitle {
+  font-size: 1.5rem;
+  color: #a8dadc;
+  margin-bottom: 20px;
+}
+/* Color and styling for "How it works?" section title on homepage */
+.homepage-section-title {
+  font-size: 1.8rem; /* Set the font size */
+  color: #1d3557; /* Dark blue color */
+  margin-top: 30px; /* Space above the title */
+}
+
+/* List of steps in the homepage */
+.homepage-steps {
+  list-style: decimal inside; /* Adds a numbered list style */
+  padding: 0; /* Remove padding */
+  margin: 20px auto; /* Auto margin for centering */
+  font-size: 1rem; /* Set the font size */
+  color: #555; /* Set text color */
+  text-align: left; /* Align text to the left */
+  max-width: 500px; /* Limit the maximum width */
+}
+
+/* Form on the homepage */
+.homepage-form {
+  margin: 20px auto; /* Center the form */
+  max-width: 600px; /* Limit the form width */
+  text-align: left; /* Align text inside the form to the left */
+}
+
+/* Form label styling */
+.form-label {
+  display: block; /* Make label block-level */
+  margin-bottom: 10px; /* Add space below label */
+  color: #333; /* Darker text color */
+  font-weight: bold; /* Make text bold */
+}
+
+/* Form input styling */
+.form-input {
+  width: 100%; /* Full width of container */
+  padding: 10px; /* Add padding inside input */
+  font-size: 1rem; /* Set font size */
+  border: 1px solid #ccc; /* Light border */
+  border-radius: 5px; /* Rounded corners */
+  margin-bottom: 20px; /* Space below the input */
+  transition: border-color 0.3s; /* Smooth transition for border color */
+}
+
+/* Focus effect on form input */
+.form-input:focus {
+  border-color: #e63946; /* Change border color to red */
+  outline: none; /* Remove the default outline */
+  box-shadow: 0 0 5px rgba(230, 57, 70, 0.5); /* Add a shadow for focus effect */
+}
+
+/* Form button styling */
+.form-button {
+  width: 100%; /* Full width of container */
+  padding: 10px 15px; /* Padding inside the button */
+  background-color: #457b9d; /* Set background color */
+  color: #fff; /* White text */
+  font-size: 1rem; /* Set font size */
+  font-weight: bold; /* Bold text */
+  border: none; /* Remove border */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor on hover */
+  transition: background-color 0.3s, transform 0.2s; /* Smooth transition for background and transform */
+}
+
+/* Hover effect on form button */
+.form-button:hover {
+  background-color: #1d3557; /* Darker background on hover */
+  transform: translateY(-2px); /* Slightly raise the button */
+}
+
+/* Disabled state for form button */
+.form-button:disabled {
+  background-color: #a8dadc; /* Light blue background for disabled state */
+  cursor: not-allowed; /* Show not-allowed cursor */
+}
+
+/* Error message styling */
+.error-message {
+  color: #e63946; /* Red text for error messages */
+  font-weight: bold; /* Bold text */
+  margin-top: 10px; /* Space above error message */
+}
+
+/* Recommended movies container on homepage */
+.recommendation-container {
+  margin-top: 30px; /* Space above container */
+  padding: 20px; /* Padding inside container */
+  background: #ffffff; /* White background */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  text-align: left; /* Align text to the left */
+}
+
+/* Title for recommended movies */
+.recommendation-title {
+  font-size: 1.5rem; /* Font size for title */
+  color: #333; /* Dark text color */
+  margin-bottom: 10px; /* Space below title */
+}
+
+/* List styling for recommended movies */
+.recommendation-list {
+  list-style: none; /* Remove default list styling */
+  padding: 0; /* Remove padding */
+}
+
+/* Styling for each recommended movie item */
+.recommendation-item {
+  padding: 10px; /* Padding inside each item */
+  background: #f9f9f9; /* Light gray background */
+  border-radius: 5px; /* Rounded corners */
+  margin-bottom: 10px; /* Space between items */
+  color: #555; /* Dark gray text */
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1); /* Soft shadow */
+}
+
+/* Button container for centering buttons */
+.button-container {
+  display: flex; /* Flexbox for layout */
+  justify-content: center; /* Center buttons horizontally */
+}
+
+/* Watchlist button styling on movie details page */
+.watchlist-button {
+  background-color: #008080; /* Teal background */
+  color: white; /* White text */
+  border: none; /* No border */
+  border-radius: 5px; /* Rounded corners */
+  padding: 10px 20px; /* Padding inside button */
+  font-size: 16px; /* Set font size */
+  cursor: pointer; /* Pointer cursor */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+}
+
+/* Hover effect for watchlist button */
+.watchlist-button:hover {
+  background-color: #006666; /* Darker teal on hover */
+  transform: scale(1.05); /* Slight zoom effect */
+}
+
+/* Watched button styling */
+.watched-button {
+  background-color: #28a745; /* Green background */
+  color: white; /* White text */
+  border: none; /* No border */
+  border-radius: 5px; /* Rounded corners */
+  padding: 10px 20px; /* Padding inside button */
+  font-size: 16px; /* Set font size */
+  cursor: pointer; /* Pointer cursor */
+  transition: background-color 0.3s ease, transform 0.2s ease; /* Smooth transitions */
+}
+
+/* Hover effect for watched button */
+.watched-button:hover {
+  background-color: #34d058; /* Lighter green on hover */
+  transform: scale(1.05); /* Slight zoom effect */
+}
+
+/* Rating container styling */
+.rating-container {
+  text-align: center; /* Center content */
+  padding: 20px; /* Padding inside container */
+  background: #f9f9f9; /* Light gray background */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  margin: 20px auto; /* Center the container */
+  max-width: 92%; /* Limit width */
+}
+
+/* Rating title styling */
+.rating-title {
+  font-size: 1.5rem; /* Font size */
+  color: #333; /* Dark text color */
+  margin-bottom: 15px; /* Space below title */
+}
+
+/* Stars container styling */
+.stars-container {
+  display: flex; /* Flex layout for stars */
+  justify-content: center; /* Center stars */
+  gap: 5px; /* Space between stars */
+}
+
+/* Each individual star styling */
+.star {
+  cursor: pointer; /* Pointer cursor on hover */
+  font-size: 24px; /* Set size */
+  color: gray; /* Default color */
+  transition: transform 0.2s ease, color 0.2s ease; /* Smooth transitions */
+}
+
+/* Hover effect for stars */
+.star:hover {
+  transform: scale(1.2); /* Slight zoom effect */
+  color: gold; /* Change color to gold on hover */
+}
+
+/* Selected star styling */
+.star.selected {
+  color: gold; /* Gold color for selected stars */
+}
+
+/* Average rating styling */
+.average-rating {
+  margin-top: 10px; /* Space above the text */
+  color: #555; /* Dark gray text */
+  font-size: 1rem; /* Font size */
+}
+
+/* Movie details container */
+.movie-details-container {
+  display: flex; /* Flexbox for layout */
+  flex-direction: column; /* Stack elements vertically */
+  align-items: center; /* Center content */
+  padding: 30px; /* Padding inside container */
+  background-color: #f9f9f9; /* Light background */
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  max-width: 90%; /* Limit width */
+  margin: 30px auto; /* Center the container */
+  text-align: center; /* Center text */
+}
+
+/* Styling for movie poster */
+#movie-poster {
+  border-radius: 10px; /* Rounded corners */
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2); /* Soft shadow */
+  margin-bottom: 20px; /* Space below the image */
+}
+
+/* Movie title styling */
+#movie-title {
+  display: block; /* Make title block-level */
+  margin: 0 auto; /* Center the title */
+  text-align: center; /* Center the title */
+  max-width: 100%; /* Ensure it doesn't exceed container width */
+}
+
+/* Movie summary styling */
+#movie-summary {
+  display: block; /* Make summary block-level */
+  margin: 0 auto; /* Center the summary */
+  text-align: center; /* Center the summary */
+  max-width: 100%; /* Ensure it doesn't exceed container width */
+}
+
+/* Comment section container */
+.comment-container {
+  margin-bottom: 20px; /* Space below comment */
+  padding: 15px; /* Padding inside the comment container */
+  background: #f9f9f9; /* Light background */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 2px 10px rgba(0, 0, 0, 0.1); /* Soft shadow */
+}
+
+/* Text styling for comments */
+.comment-text,
+.reply-text {
+  font-size: 16px; /* Font size */
+  line-height: 1.5; /* Line spacing */
+  margin-bottom: 10px; /* Space below text */
+}
+
+/* Author text styling */
+.comment-author,
+.reply-author {
+  font-weight: bold; /* Bold author name */
+  color: #333; /* Dark text color */
+}
+
+/* Input styling for comment and reply */
+.edit-input,
+.reply-textarea {
+  width: 100%; /* Full width of container */
+  padding: 10px; /* Padding inside input */
+  font-size: 14px; /* Font size */
+  margin: 10px 0; /* Margin around input */
+  border: 1px solid #ccc; /* Light border */
+  border-radius: 5px; /* Rounded corners */
+}
+
+/* Button styling for comment actions */
+.comment-actions button,
+.replies-container button {
+  margin-right: 10px; /* Space between buttons */
+  padding: 8px 12px; /* Padding inside buttons */
+  border: none; /* No border */
+  border-radius: 5px; /* Rounded corners */
+  font-size: 14px; /* Font size */
+  cursor: pointer; /* Pointer cursor */
+  transition: background 0.3s ease; /* Smooth background transition */
+}
+
+/* Button styles for edit, reply, delete, save, etc. */
+.btn-edit {
+  background: #007bff; /* Blue for edit */
+  color: white; /* White text */
+}
+
+.btn-edit:hover {
+  background: #0056b3; /* Darker blue on hover */
+}
+
+.btn-reply {
+  background: #28a745; /* Green for reply */
+  color: white; /* White text */
+}
+
+.btn-reply:hover {
+  background: #1e7e34; /* Darker green on hover */
+}
+
+.btn-delete {
+  background: #dc3545; /* Red for delete */
+  color: white; /* White text */
+}
+
+.btn-delete:hover {
+  background: #a71d2a; /* Darker red on hover */
+}
+
+.btn-save {
+  background: #ffc107; /* Yellow for save */
+  color: #333; /* Dark text */
+}
+
+.btn-save:hover {
+  background: #e0a800; /* Darker yellow on hover */
+}
+
+.btn-submit-reply {
+  background: #17a2b8; /* Light blue for submit reply */
+  color: white; /* White text */
+}
+
+.btn-submit-reply:hover {
+  background: #117a8b; /* Darker blue on hover */
+}
+
+/* Replies container styling */
+.replies-container {
+  margin-left: 20px; /* Indent for replies */
+  padding-left: 15px; /* Add space to the left */
+  border-left: 2px solid #ddd; /* Left border for replies */
+}
+
+/* Individual reply styling */
+.reply {
+  margin-bottom: 15px; /* Space below each reply */
+}
+
+/* Comments section styling */
+.comments-section {
+  padding: 20px; /* Padding inside section */
+  background-color: #f8f9fa; /* Light background */
+  border-radius: 8px; /* Rounded corners */
+  box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1); /* Soft shadow */
+  max-width: 92%; /* Limit width */
+  margin: 0 auto; /* Center the section */
+}
+
+/* Add comment form styling */
+.add-comment-form {
+  margin-bottom: 20px; /* Space below form */
+  display: flex; /* Flex layout */
+  flex-direction: column; /* Stack elements vertically */
+}
+
+/* Textarea for adding a comment */
+.add-comment-textarea {
+  resize: none; /* Disable resizing */
+  width: 100%; /* Full width */
+  height: 80px; /* Fixed height */
+  padding: 10px; /* Padding inside textarea */
+  font-size: 14px; /* Font size */
+  border: 1px solid #ccc; /* Light border */
+  border-radius: 5px; /* Rounded corners */
+  margin-bottom: 10px; /* Space below */
+}
+
+/* Submit comment button styling */
+.btn-submit-comment {
+  align-self: flex-end; /* Align button to the right */
+  background: #007bff; /* Blue background */
+  color: white; /* White text */
+  padding: 8px 16px; /* Padding */
+  font-size: 14px; /* Font size */
+  border: none; /* No border */
+  border-radius: 5px; /* Rounded corners */
+  cursor: pointer; /* Pointer cursor */
+}
+
+.btn-submit-comment:hover {
+  background: #0056b3; /* Darker blue on hover */
+}
+
+/* List of comments styling */
+.comments-list {
+  margin-top: 20px; /* Space above comments list */
+}
+
+/* Individual comment container styling */
+.comment-container {
+  padding: 15px; /* Padding inside container */
+  background: #ffffff; /* White background */
+  border: 1px solid #e1e1e1; /* Light gray border */
+  border-radius: 8px; /* Rounded corners */
+  margin-bottom: 15px; /* Space between comments */
+  box-shadow: 0 1px 5px rgba(0, 0, 0, 0.1); /* Soft shadow */
+}
+
+/* Hover effect for individual comments */
+.comment-container:hover {
+  background: #f1f1f1; /* Light gray background on hover */
+}
