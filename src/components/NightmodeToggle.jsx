@@ -1,5 +1,6 @@
 import React, { useState } from 'react';
 
+
 const NightModeToggle = ({onToggle}) => {
   const [isNightMode, setIsNightMode] = useState(false);
 
@@ -11,7 +12,7 @@ const NightModeToggle = ({onToggle}) => {
     const themeStyle = document.getElementById("theme-stylesheet");
 
     if(themeStyle) {
-        themeStyle.href = newMode ? '/Nightmode.css' : '/App.css';
+        themeStyle.href = newMode ? './Nightmode.css' : './App.css';
     }
 
     if(onToggle){
