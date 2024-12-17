@@ -223,20 +223,18 @@ const MovieDetails = () => {
       <CommentsSection movieId={id} />
       
       <div className="button-container">
-      {token && !isInWatchlist && ( 
-        <button className="watchlist-button" 
-        onClick={handleAddToWatchlist}>Add to Watchlist</button>
-      )}
+        {token && !isInWatchlist && ( 
+          <button className="watchlist-button" onClick={handleAddToWatchlist}>
+            Add to Watchlist
+          </button>
+        )}
 
+        {token && isInWatchlist && <p>Added to Watchlist!</p>} {/* Only show if logged in and movie is in watchlist */}
 
-      {isInWatchlist && <p>Added to Watchlist!</p>}
-
-
-      {token && !isWatched && (
-        <button className="watched-button" onClick={handleWatched}>I've Watched This</button>
-      )}
+        {token && !isWatched && (
+          <button className="watched-button" onClick={handleWatched}>I've Watched This</button>
+        )}
       </div>
-
 
       {isWatched && <p>You've watched this movie!</p>}
 
