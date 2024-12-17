@@ -1,10 +1,8 @@
-import {React, useState} from "react";
-import { Link, useNavigate} from "react-router-dom";
-import NightModeToggle from "./NightmodeToggle";
+import { React } from "react";
+import { Link, useNavigate } from "react-router-dom";
 
 const Navbar = () => {
   const navigate = useNavigate();
-  const [isNightMode, setIsNightMode] = useState(false);
 
   const handleLogout = () => {
     localStorage.removeItem('token');
@@ -15,15 +13,10 @@ const Navbar = () => {
 
   const isLoggedIn = !!localStorage.getItem('token');
 
-
-  const handleToggleTheme = (newMode) => {
-    setIsNightMode(newMode);
-  };
-
   return (
     <nav>
       <Link to="/">
-      <img src="/images/logo.png" alt="Logo" className="nav-logo" />
+        <img src="/images/logo.png" alt="Logo" className="nav-logo" />
       </Link>
 
       <div className="nav-links">
@@ -32,8 +25,6 @@ const Navbar = () => {
         <Link to="/watchlists">Watchlists</Link>
         <Link to="/account">Account</Link>
       </div>
-      
-      <NightModeToggle onToggle={handleToggleTheme} />
       
       {isLoggedIn && <button className="logout-button" onClick={handleLogout}>Logout</button>}
     </nav>
