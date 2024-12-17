@@ -3,6 +3,7 @@ import { useNavigate } from 'react-router-dom';
 import AccountDetails from './AccountDetails';
 
 const Account = () => {
+    
     const [registerName, setRegisterName] = useState('');
     const [registerEmail, setRegisterEmail] = useState('');
     const [registerUsername, setRegisterUsername] = useState('');
@@ -87,6 +88,14 @@ const Account = () => {
         } catch (error) {
             console.error('Error during login:', error);
         }
+    };
+
+    const handleLogout = () => {
+      localStorage.removeItem('token');
+      localStorage.removeItem('username');
+      localStorage.removeItem('userId');
+      setTokenPresent(false);
+      navigate('/');
     };
 
     return (
