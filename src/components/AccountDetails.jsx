@@ -11,17 +11,15 @@ const AccountDetails = () => {
   const [watchedMovies, setWatchedMovies] = useState([]);
   const [userId, setUserId] = useState(null);
   const [error, setError] = useState(null);
-  const [loggedIn, setLoggedIn] = useState(!!localStorage.getItem('token'));
   const navigate = useNavigate();
-  const key = userId || 'guest';
 
+  // Decode JWT to extract user info
   const parseJwt = (token) => {
     var base64Url = token.split('.')[1];
     var base64 = base64Url.replace(/-/g, '+').replace(/_/g, '/');
     var jsonPayload = decodeURIComponent(atob(base64).split('').map(function(c) {
         return '%' + ('00' + c.charCodeAt(0).toString(16)).slice(-2);
     }).join(''));
-
     return JSON.parse(jsonPayload);
   };
 
@@ -42,7 +40,7 @@ const AccountDetails = () => {
       }
     };
     fetchUserId();
-  }, [navigate, setUserId]);  
+  }, [navigate]);
 
   useEffect(() => {
     if (!userId || !username) {
@@ -85,7 +83,6 @@ const AccountDetails = () => {
           throw new Error('Failed to get watched movies');
         }
         const data = await response.json();
-        console.log("Fetched Watched Movies Data:", data);
         setWatchedMovieIds(data);
       } catch (error) {
         console.error('Error fetching watched movies:', error);
@@ -133,11 +130,11 @@ const AccountDetails = () => {
           'Authorization': `Bearer ${token}`,
         },
       });
-  
+
       if (!response.ok) {
         throw new Error('Failed to remove from watched movies');
       }
-  
+
       setWatchedMovieIds(prevIds => prevIds.filter(id => id !== movieId));
       setWatchedMovies(prevMovies => prevMovies.filter(movie => movie.id !== movieId));
     } catch (error) {
@@ -149,23 +146,25 @@ const AccountDetails = () => {
   const handleLogout = () => {
     localStorage.removeItem('token');
     localStorage.removeItem('username');
-    localStorage.removeItem('userId')
+    localStorage.removeItem('userId');
     setComments([]);
     setWatchedMovieIds([]);
     setWatchedMovies([]);
     setError(null);
-    setLoggedIn(false);
- 
+    navigate('/account');
   };
 
-  if(!loggedIn){
-    return <Account/>
+  const loggedIn = !!localStorage.getItem('token'); // Check if user is logged in
+
+  if (!loggedIn) {
+    return <Account />;
   }
 
   return (
     <>
       <div className="user-profile-container">
         <h1>Hello {username}</h1>
+        <button onClick={handleLogout}>Logout</button>
       </div>
 
       <div className="columns-container">
